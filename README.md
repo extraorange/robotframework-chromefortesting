@@ -24,6 +24,7 @@ In your Robot Framework script:
 # example.robot
 
 Initialise Chrome For Testing    ${channel}=stable    ${output_bin}=${CURDIR}
+Open Browser    ...    browser=chrome
 ```
 
 Initialisation tree:
@@ -39,6 +40,8 @@ Initialisation tree:
 ### :warning: Oi, Windows!
 Due to Chromedriver server-like nature, if Google Chrome is installed on Windows -> Chromedriver will attempt to communicate to Google Chrome default binary install location ```C:\Program Files\Google\Chrome\Application\``` uncoditionally, preeceding system-wide $PATH look-ups and their priority order or .venv activation $PATH gatekeeping.
 
+This initiation takes precedence over system-wide ```%PATH%``` executable path and any kind of virtual environment activation ```%PATH%``` control.
+
 In order to "harden" CfT binary recognition, consider the following depending on your usecase/context/workflow/pipeline:
 
 0. [*_Ditch Google Chrome._*](https://en.wikipedia.org/wiki/Nothing_to_hide_argument) -> OK for CI/CD agents & containers, humankind.
@@ -48,7 +51,7 @@ In order to "harden" CfT binary recognition, consider the following depending on
 
  ${binary_path}    Initialise Chrome For Testing
  ${options}    Set Variable    add_argument("--binary-location=${binary_path}")
- Open Browser    ...    chrome    option=${options}
+ Open Browser    ...    browser=chrome    option=${options}
 ```
 2. Select ```Beta``` instead of ```Stable``` channel (or any other). 
 Version divergence against consumer release of Google Chrome will result in devergent binary bypass. -> OK for AQA teams and future-ready automation testing, convenient.
