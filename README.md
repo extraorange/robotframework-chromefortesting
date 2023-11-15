@@ -42,7 +42,7 @@ Due to Chromedriver server-like nature, if Google Chrome is installed on Windows
 In order to "harden" CfT binary recognition, consider the following depending on your usecase/context/workflow/pipeline:
 
 0. [*_Ditch Google Chrome._*](https://en.wikipedia.org/wiki/Nothing_to_hide_argument) -> OK for CI/CD agents & containers, humankind.
-1. :bulb: *_Recommended_* :bulb: Capture module keyword output & provide with other options:
+1. :bulb: *_Recommended_* :bulb: Capture module keyword output & provide with ```Open Browser``` options:
 ```
 # example.robot
 
@@ -52,14 +52,15 @@ In order to "harden" CfT binary recognition, consider the following depending on
 ```
 2. Select ```Beta``` instead of ```Stable``` channel (or any other). 
 Version divergence against consumer release of Google Chrome will result in devergent binary bypass. -> OK for AQA teams and future-ready automation testing, convenient.
-3. Rename default Google Chrome executable: ```chrome.exe``` -> ```googlechrome.exe```. -> OK for lazy inidividuals, weird.
+3. Rename default Google Chrome executable: ```chrome.exe``` -> ```googlechrome.exe``` -> OK for lazy inidividuals, weird.
 
 ## :clipboard: Release checklist
 
-- [ ] Progress bar for downloads
-- [ ] Robust platform detection
-- [ ] Detection of pre-exposed Chromedrivers
 - [ ] Dynamic channels support
-- [ ] Better default & custom binary location
+- [ ] Robust platform detection
+- [ ] Pre-existing Chromedrivers detection
+- [ ] Complete error handling 
+- [ ] Standard default & custom binary location
+- [ ] Progress bar for downloads
 - [ ] Explicit Robot Framework logging
 - [ ] Release to PyPl as a package
