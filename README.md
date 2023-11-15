@@ -11,7 +11,7 @@ For detailed information on CfT, refer to the official CfT documentation:
 
 ## :book: Overview
 
-This module provides a conveniet keyword that takes care of automated installation and configuration of specific Chromium flavour: *Chrome for Testing*. It dynamically ensures a consistent automation testing environment across multiple platforms, by encapsulation of automatic browser infrastructure setup. 
+This module provides a conveniet keyword that takes care of automated installation and configuration of specific Chromium flavour: **Chrome for Testing**. Dynamically ensures a consistent automation testing environment across multiple platforms, by encapsulation of automatic browser infrastructure setup. 
 
 ## :package: Instalation
 
@@ -41,7 +41,7 @@ Due to Chromedriver server-like nature, if Google Chrome is installed on Windows
 
 In order to "harden" CfT binary recognition, consider the following depending on your usecase/context/workflow/pipeline:
 
-0. [_Ditch Google Chrome._][https://en.wikipedia.org/wiki/Nothing_to_hide_argument] -> OK for CI/CD agents & containers, humankind.
+0. [_Ditch Google Chrome._](https://en.wikipedia.org/wiki/Nothing_to_hide_argument) -> OK for CI/CD agents & containers, humankind.
 1. :bulb: *_Recommended_* :bulb: Capture module keyword output & provide with other options:
 ```
 # example.robot
