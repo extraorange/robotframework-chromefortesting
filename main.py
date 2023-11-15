@@ -16,9 +16,9 @@ Disclaimer: Distributed as-is, without warranties or guarantees.
 
 Author: dX
 Date: 13 Nov 2023
-Version: 0.3
+Version: 0.4 (pre-release)
 License: GNU General Public License v3.0
-p
+
 """
 
 import datetime

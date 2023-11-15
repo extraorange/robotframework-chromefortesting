@@ -1,6 +1,6 @@
 # robotframework-chromefortesting :ukraine:
 
-![Version](https://img.shields.io/badge/version-0.3-%2392C444) ![Made in Ukraine](https://img.shields.io/badge/made_in_Ukraine-%23AF1717)
+![Version](https://img.shields.io/badge/version-0.4-%2392C444) ![Made in Ukraine](https://img.shields.io/badge/made_in_Ukraine-%23AF1717)
 
 A minimalistic tool for seamless settup of Chrome for Testing (CfT) in Robot Framework.
 For detailed information on CfT, refer to the official CfT documentation:
@@ -19,12 +19,15 @@ _in progress..._
 _in progress..._
 
 ## Usage
-### In Robot Framework
+
+In your usual .robot script:
 
 ```
-Initialise Chrome For Testing    ${channel}    ${bin_path}
+${binary_path}    Initialise Chrome For Testing    ${channel}    ${binary_path}
 ```
-If channel is not provided -> default to ```STABLE```.
+
+If unprovided:
+```channel``` -> ```STABLE```, ```binary_path``` -> ```to be done```
 
 Directory tree upon keyword execution:
 ```
@@ -35,13 +38,22 @@ Directory tree upon keyword execution:
 │ └── chromefortesting_config.json    +
 ```
 
-## Pre-release checklist
+### Oi, Windows!
+Due to Chromedriver server-like nature, if Google Chrome is installed on Windows -> Chromedriver will attempt to communicate to Google Chrome default binary install location ```C:\Program Files\Google\Chrome\Application\``` uncoditionally, preeceding system-wide $PATH look-ups and their priority order or .venv activation $PATH gatekeeping.
 
-- [ ] Progress bar for downloads
+In order to "harden" CfT binary recognition, consider the following depending on your usecase/context/workflow/pipeline:
+
+0. (_Ditch Google Chrome._)[https://en.wikipedia.org/wiki/Nothing_to_hide_argument] -> OK for CI/CD agents & containers, humankind.
+1. Capture keyword output ```${binary_path}``` & provide with ```Open Browser    ...    _options_``` keyword. -> OK. *_Recommended_*
+2. Select ```Beta``` instead of ```Stable``` channel. Version divergence against consumer release of Google Chrome will result in default binary location bypass. -> OK for teams and future-ready automation testing, convenient.
+3. Rename default Google Chrome executable: ```chrome.exe``` -> ```googlechrome.exe```. - OK for inidividuals, lazy.
+
+## Release checklist
+
+- [ ] Progress bar for downloads.
 - [ ] Robust platform detection.
-- [ ] Detection of pre-exposed Chromedriver.
-- [ ] All channels.
-- [ ] Custom binary location.
-- [ ] Explicit standalone logging.
-- [ ] Logging within Robot Framework.
+- [ ] Detection of pre-exposed Chromedrivers.
+- [ ] All channels support.
+- [ ] Better default & custom binary location.
+- [ ] Explicit Robot Framework logging.
 - [ ] Release to PyPl as a package.
