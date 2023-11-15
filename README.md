@@ -38,22 +38,22 @@ Directory tree upon keyword execution:
 │ └── chromefortesting_config.json    +
 ```
 
-### Oi, Windows!
+### Oi, Windows! :warning:
 Due to Chromedriver server-like nature, if Google Chrome is installed on Windows -> Chromedriver will attempt to communicate to Google Chrome default binary install location ```C:\Program Files\Google\Chrome\Application\``` uncoditionally, preeceding system-wide $PATH look-ups and their priority order or .venv activation $PATH gatekeeping.
 
 In order to "harden" CfT binary recognition, consider the following depending on your usecase/context/workflow/pipeline:
 
-0. (_Ditch Google Chrome._)[https://en.wikipedia.org/wiki/Nothing_to_hide_argument] -> OK for CI/CD agents & containers, humankind.
-1. Capture keyword output ```${binary_path}``` & provide with ```Open Browser    ...    _options_``` keyword. -> OK. *_Recommended_*
-2. Select ```Beta``` instead of ```Stable``` channel. Version divergence against consumer release of Google Chrome will result in default binary location bypass. -> OK for teams and future-ready automation testing, convenient.
-3. Rename default Google Chrome executable: ```chrome.exe``` -> ```googlechrome.exe```. - OK for inidividuals, lazy.
+0. [_Ditch Google Chrome._][https://en.wikipedia.org/wiki/Nothing_to_hide_argument] -> OK for CI/CD agents & containers, humankind.
+1. :bulb: *_Recommended._* :bulb: Capture keyword output ```${binary_path}``` & provide with ```Open Browser    ...    options``` keyword. -> OK.
+2. Select ```Beta``` instead of ```Stable``` channel. Version divergence against consumer release of Google Chrome will result devergent binary bypass. -> OK for multi-platform teams and future-ready automation testing, convenient.
+3. Rename default Google Chrome executable: ```chrome.exe``` -> ```googlechrome.exe```. -> OK for inidividuals, lazy.
 
 ## Release checklist
 
-- [ ] Progress bar for downloads.
-- [ ] Robust platform detection.
-- [ ] Detection of pre-exposed Chromedrivers.
-- [ ] All channels support.
-- [ ] Better default & custom binary location.
-- [ ] Explicit Robot Framework logging.
-- [ ] Release to PyPl as a package.
+- [ ] Progress bar for downloads
+- [ ] Robust platform detection
+- [ ] Detection of pre-exposed Chromedrivers
+- [ ] Dynamic channels support
+- [ ] Better default & custom binary location
+- [ ] Explicit Robot Framework logging
+- [ ] Release to PyPl as a package
