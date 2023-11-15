@@ -23,7 +23,7 @@ _in progress..._
 In your usual .robot script:
 
 ```
-${binary_path}    Initialise Chrome For Testing    ${channel}    ${binary_path}
+${binary_path}    Initialise Chrome For Testing    ${channel}    ${output_bin}
 ```
 
 If unprovided:
@@ -44,9 +44,13 @@ Due to Chromedriver server-like nature, if Google Chrome is installed on Windows
 In order to "harden" CfT binary recognition, consider the following depending on your usecase/context/workflow/pipeline:
 
 0. [_Ditch Google Chrome._][https://en.wikipedia.org/wiki/Nothing_to_hide_argument] -> OK for CI/CD agents & containers, humankind.
-1. :bulb: *_Recommended._* :bulb: Capture keyword output ```${binary_path}``` & provide with ```Open Browser    ...    options``` keyword. -> OK.
-2. Select ```Beta``` instead of ```Stable``` channel. Version divergence against consumer release of Google Chrome will result devergent binary bypass. -> OK for multi-platform teams and future-ready automation testing, convenient.
-3. Rename default Google Chrome executable: ```chrome.exe``` -> ```googlechrome.exe```. -> OK for inidividuals, lazy.
+1. :bulb: *_Recommended._* :bulb: Capture keyword output ```${binary_path}``` & provide with other options:
+ ```
+ ${options}    Set Variable    add_argument("--binary-location=${binary_path}")
+ Open Browser    ...    ${options}
+ ```
+2. Select ```Beta``` instead of ```Stable``` channel (or any other). Version divergence against consumer release of Google Chrome will result in devergent binary bypass. -> OK for multi-platform teams and future-ready automation testing, convenient.
+3. Rename default Google Chrome executable: ```chrome.exe``` -> ```googlechrome.exe```. -> OK for lazy inidividuals, weird.
 
 ## Release checklist
 
