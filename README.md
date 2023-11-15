@@ -24,7 +24,7 @@ In your Robot Framework script:
 ```
 # example.robot
 
-${binary_path}    Initialise Chrome For Testing    ${channel}=stable    ${output_bin}=${CURDIR}
+Initialise Chrome For Testing    ${channel}=stable    ${output_bin}=${CURDIR}
 ```
 
 Chrome for Testing initialisation tree:
