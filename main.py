@@ -16,9 +16,9 @@ Disclaimer: Distributed as-is, without warranties or guarantees.
 
 Author: dX
 Date: 13 Nov 2023
-Version: pre-release-0.2
+Version: 0.3
 License: GNU General Public License v3.0
-
+p
 """
 
 import datetime
@@ -46,7 +46,7 @@ class extended_ZipFile(ZipFile): # Extending to safeguard permissions translatio
         return path
 
 def generate_md5(binary_path, algorithm="md5", block_size=65536) -> str:
-    
+
     def calculate_checksum(file_path, algorithm, block_size):
         hash_function = hashlib.new(algorithm)
         with open(file_path, 'rb') as file:
@@ -108,8 +108,6 @@ platform_path = os.path.join(binary_path, platform)
 @keyword("Initialise Chrome For Testing")
 def main():
 
-    #func 
-
         # func assess_init() -> bool:
     if os.path.exists(config_path):
 
@@ -121,14 +119,12 @@ def main():
                     last_version = config_data.get(platform, {}).get("last_version")
                     last_update = config_data.get(platform, {}).get("last_update")
                     last_md5 = config_data.get(platform, {}).get("last_md5")
-                    initialised = True
+                    initialised = not(generate_md5(os.path.join(binary_path, platform)) == last_md5)
 
         except json.JSONDecodeError:
             logging.error("Compromised configuration file detected. Rebuilding...")
             os.remove(config_path)
             initialised = False
-
-        initialised = generate_md5(os.path.join(binary_path, platform)) != last_md5
 
     else:
         initialised = False
@@ -141,9 +137,9 @@ def main():
         if response.status_code == 200:
             current_version = response.json()["channels"]["Stable"]["version"]
             update_detected = int(current_version.replace(".", "")) > int(last_version.replace(".", "")) if initialised else False
-            
-            if not initialised or corrupt_binaries or update_detected:
-                
+
+            if not initialised or update_detected:
+
                 # func obtain_binaries() -> (chrome binary, chromedriver binary):
                 chrome_source = response.json()["channels"]["Stable"]["downloads"]["chrome"]
                 chromedriver_source = response.json()["channels"]["Stable"]["downloads"]["chromedriver"]
@@ -176,12 +172,12 @@ def main():
                             archive.extractall(platform_path)
                         os.remove(chromedriver_zip)
                         break
-                    
+
                     # func update_success_proceed() -> None:
                 logger.info(f"CfT: New latest version in use: {current_version}. Initiating Robot Framework automation...")
                 write_config(config_path, platform, current_version, str(datetime.datetime.now(datetime.timezone.utc)), generate_md5(platform_path))
                 expose_binaries(os.path.join(platform_path, f"chrome-{platform}"), os.path.join(platform_path, f"chrome-{platform}"))
-                
+
         else:
                 # func update_fail_proceed() -> None:
             logger.warning("Update status check unsuccessful. Connectivity issues detected. Initiating Robot Framework automation...")
