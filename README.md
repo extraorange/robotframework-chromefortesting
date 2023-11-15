@@ -27,9 +27,6 @@ In your Robot Framework script:
 ${binary_path}    Initialise Chrome For Testing    ${channel}=stable    ${output_bin}=${CURDIR}
 ```
 
-If unprovided:
-```channel``` -> ```STABLE```, ```binary_path``` -> ```to be done```
-
 Chrome for Testing initialisation tree:
 ```
 ├── robotframework-chromefortesting.py    +
