@@ -48,7 +48,7 @@ In order to "harden" CfT binary recognition, consider the following depending on
 
  ${binary_path}    Initialise Chrome For Testing
  ${options}    Set Variable    add_argument("--binary-location=${binary_path}")
- Open Browser    ...    ${options}
+ Open Browser    ...    chrome    option=${options}
 ```
 2. Select ```Beta``` instead of ```Stable``` channel (or any other). 
 Version divergence against consumer release of Google Chrome will result in devergent binary bypass. -> OK for AQA teams and future-ready automation testing, convenient.
