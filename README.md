@@ -41,7 +41,7 @@ Due to Chromedriver server-like nature, if Google Chrome is installed on Windows
 
 In order to "harden" CfT binary recognition, consider the following depending on your usecase/context/workflow/pipeline:
 
-0. [_Ditch Google Chrome._](https://en.wikipedia.org/wiki/Nothing_to_hide_argument) -> OK for CI/CD agents & containers, humankind.
+0. [*_Ditch Google Chrome._*](https://en.wikipedia.org/wiki/Nothing_to_hide_argument) -> OK for CI/CD agents & containers, humankind.
 1. :bulb: *_Recommended_* :bulb: Capture module keyword output & provide with other options:
 ```
 # example.robot
