@@ -4,11 +4,12 @@
 robotframework-chromefortesting
 Chrome for Testing (CfT) for Robot Framework
 
-├── ${bin_path}                   +
-│   ├── [platform]/               +
-│   │   ├── chromedriver          +
-│   │   └── chrome_[platform]/    +
-│   └── cft_config.json           +
+├── robotframework-chromefortesting.py    +
+├── ${output_bin}                         +
+│ ├── [platform]/                         +
+│ │ ├── chrome-[platform]/                +
+│ │ └── chromedriver-[platform]           +
+│ └── chromefortesting_config.json        +
 
 GitHub: https://github.com/dunexplorer/robotframework-chromefortesting
 

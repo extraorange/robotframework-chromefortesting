@@ -2,7 +2,7 @@
 
 ![Version](https://img.shields.io/badge/version-0.4-%2392C444) ![Made in Ukraine](https://img.shields.io/badge/made_in_Ukraine-%23AF1717)
 
-A minimalistic tool for seamless setup of Chrome for Testing (CfT) in Robot Framework.
+A minimalistic tool for seamless setup of Chrome for Testing (CfT) in adn within Robot Framework.
 For detailed information on CfT, refer to the official CfT documentation:
 
 - [Chrome for Testing Documentation](https://developer.chrome.com/blog/chrome-for-testing/)
@@ -10,13 +10,13 @@ For detailed information on CfT, refer to the official CfT documentation:
 
 ## :book: Overview
 
-This script automates the installation and configuration of Chrome and Chromedriver for testing purposes. It ensures a consistent testing environment across different platforms.
+This module porvides a conveniet keyword that takes care of automated installation and configuration of specific Chromium flavour: *Chrome for Testing*. It ensures a consistent testing environment across multiple platforms, by encapsulation of automated browser infrastructure setup. 
 
-_in progress..._
+_is being written..._
 
 ## :package: Instalation
 
-_in progress..._
+_is being written..._
 
 ## :hammer: Usage
 
@@ -27,7 +27,7 @@ In your Robot Framework script:
 Initialise Chrome For Testing    ${channel}=stable    ${output_bin}=${CURDIR}
 ```
 
-Chrome for Testing initialisation tree:
+Initialisation tree:
 ```
 ├── robotframework-chromefortesting.py    +
 ├── ${output_bin}                         +
@@ -43,7 +43,7 @@ Due to Chromedriver server-like nature, if Google Chrome is installed on Windows
 In order to "harden" CfT binary recognition, consider the following depending on your usecase/context/workflow/pipeline:
 
 0. [_Ditch Google Chrome._][https://en.wikipedia.org/wiki/Nothing_to_hide_argument] -> OK for CI/CD agents & containers, humankind.
-1. :bulb: *_Recommended._* :bulb: Capture module keyword output & provide with other options:
+1. :bulb: *_Recommended_* :bulb: Capture module keyword output & provide with other options:
 ```
 # example.robot
 
