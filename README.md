@@ -23,7 +23,7 @@ In your Robot Framework script:
 ```
 # example.robot
 
-Initialise Chrome For Testing    ${channel}=stable    ${output_bin}=${CURDIR}
+Initialise Chrome For Testing    ${channel}=stable    ${output_dir}=None
 Open Browser    ...    browser=chrome
 ```
 
@@ -31,7 +31,7 @@ Initialisation tree:
 ```
 ├── robotframework-chromefortesting.py    +
 ├── ${output_bin}                         +
-│ ├── [platform]/                         +
+│ ├── [channel]/                          +
 │ │ ├── chrome-[platform]/                +
 │ │ └── chromedriver-[platform]           +
 │ └── chromefortesting_config.json        +
@@ -40,30 +40,27 @@ Initialisation tree:
 ### :warning: Oi, Windows!
 Due to Chromedriver server-like nature, if Google Chrome is installed on Windows -> Chromedriver will attempt to communicate to Google Chrome default binary install location ```C:\Program Files\Google\Chrome\Application\``` uncoditionally, preeceding system-wide $PATH look-ups and their priority order or .venv activation $PATH gatekeeping.
 
-This initiation takes precedence over system-wide ```%PATH%``` executable path and any kind of virtual environment activation ```%PATH%``` control.
+Alas, this initiation takes precedence over system-wide ```%PATH%``` executable path and any kind of virtual environment activation ```%PATH%``` control.
 
-In order to "harden" CfT binary recognition, consider the following depending on your usecase/context/workflow/pipeline:
+Thus, to  CfT binary recognition, consider the following strategies based on your specific use case, context, workflow, or pipeline:
 
 0. [*_Ditch Google Chrome._*](https://en.wikipedia.org/wiki/Nothing_to_hide_argument) -> OK for CI/CD agents & containers, humankind.
 1. :bulb: *_Recommended_* :bulb: Capture module keyword output & provide with ```Open Browser``` options:
 ```
 # example.robot
 
- ${binary_path}    Initialise Chrome For Testing
- ${options}    Set Variable    add_argument("--binary-location=${binary_path}")
+ ${output_bin}    Initialise Chrome For Testing
+ ${options}    Set Variable    add_argument("--binary-location=${output_bin}")
  Open Browser    ...    browser=chrome    option=${options}
 ```
 2. Select ```Beta``` instead of ```Stable``` channel (or any other). 
-Version divergence against consumer release of Google Chrome will result in devergent binary bypass. -> OK for AQA teams and future-ready automation testing, convenient.
-3. Rename default Google Chrome executable: ```chrome.exe``` -> ```googlechrome.exe``` -> OK for lazy inidividuals, weird.
+Version divergence against consumer release of Google Chrome will result in non-compatible binary bypass. -> OK for anticipatory automated testing, smart.
+3. Rename default Google Chrome executable: ```chrome.exe``` -> ```googlechrome.exe``` -> OK, weird.
 
-## :clipboard: Release checklist
+## :clipboard: Checklist
 
-- [ ] Dynamic channels support
-- [ ] Robust platform detection
-- [ ] Pre-existing Chromedrivers detection
-- [ ] Complete error handling 
-- [ ] Standard default & custom binary location
-- [ ] Progress bar for downloads
-- [ ] Explicit Robot Framework logging
-- [ ] Release to PyPl as a package
+- flexible platform detection
+- pre-existing Chromedrivers detection
+- complete error handling 
+- progress bar for downloads
+- explicit Robot Framework logging
