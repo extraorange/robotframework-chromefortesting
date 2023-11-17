@@ -23,7 +23,7 @@ In your Robot Framework script:
 ```
 # example.robot
 
-Initialise Chrome For Testing    ${channel}=stable    ${output_dir}=None
+Initialise Chrome For Testing    ${channel}=stable    ${path}=None
 Open Browser    ...    browser=chrome
 ```
 
@@ -50,8 +50,8 @@ Thus, to  CfT binary recognition, consider the following strategies based on you
 ```
 # example.robot
 
- ${output_bin}    Initialise Chrome For Testing
- ${options}    Set Variable    add_argument("--binary-location=${output_bin}")
+ ${binary_location}    Initialise Chrome For Testing
+ ${options}    Set Variable    add_argument("--binary-location=${binary_location}")
  Open Browser    ...    browser=chrome    option=${options}
 ```
 2. Select ```Beta``` instead of ```Stable``` channel (or any other). 
