@@ -36,7 +36,7 @@ Initialisation tree if custom ```${path}``` provided:
 │ └── chromefortesting_config.json        +
 ```
 
-_You might want to include your custom bin folder in your ```.gitignore``` ..._
+_You might want to include your custom bin folder in your .gitignore ..._
 
 ### :warning: Oi, Windows!
 Due to Chromedriver server-like nature, if Google Chrome is installed on Windows -> Chromedriver will attempt to communicate to Google Chrome default binary install location ```C:\Program Files\Google\Chrome\Application\``` uncoditionally, preeceding system-wide $PATH look-ups and their priority order or .venv activation $PATH gatekeeping.
