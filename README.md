@@ -29,11 +29,11 @@ Open Browser    ...    browser=chrome
 
 Initialisation tree if custom ```${path}``` provided:
 ```
-├── ${output_bin}                         +
-│ ├── [channel]/                          +
-│ │ ├── chrome-[platform]/                +
-│ │ └── chromedriver-[platform]           +
-│ └── chromefortesting_config.json        +
+ ${output_bin}                         +
+  ├── [channel]/                       +
+  │ ├── chrome-[platform]/             +
+  │ └── chromedriver-[platform]/       +
+  └── chromefortesting_config.json     +
 ```
 
 _You might want to include your custom bin folder in your .gitignore ..._
