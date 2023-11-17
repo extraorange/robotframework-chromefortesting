@@ -18,7 +18,7 @@ This module provides a conveniet keyword that takes care of automated installati
 _is being written..._
 
 ## :hammer: Usage
-
+s
 In your Robot Framework script:
 ```
 # example.robot
@@ -27,15 +27,16 @@ Initialise Chrome For Testing    ${channel}=stable    ${output_dir}=None
 Open Browser    ...    browser=chrome
 ```
 
-Initialisation tree:
+Initialisation tree if custom ```${path}``` provided:
 ```
-├── robotframework-chromefortesting.py    +
 ├── ${output_bin}                         +
 │ ├── [channel]/                          +
 │ │ ├── chrome-[platform]/                +
 │ │ └── chromedriver-[platform]           +
 │ └── chromefortesting_config.json        +
 ```
+
+_You might want to include your custom bin folder in your ```.gitignore``` ..._
 
 ### :warning: Oi, Windows!
 Due to Chromedriver server-like nature, if Google Chrome is installed on Windows -> Chromedriver will attempt to communicate to Google Chrome default binary install location ```C:\Program Files\Google\Chrome\Application\``` uncoditionally, preeceding system-wide $PATH look-ups and their priority order or .venv activation $PATH gatekeeping.
@@ -60,7 +61,6 @@ Version divergence against consumer release of Google Chrome will result in non-
 ## :clipboard: Checklist
 
 - flexible platform detection
-- pre-existing Chromedrivers detection
-- complete error handling 
-- progress bar for downloads
 - explicit Robot Framework logging
+- progress bar for downloads
+- complete error handling

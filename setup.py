@@ -10,7 +10,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            # Add any command-line scripts here
+
         ],
     },
 )
