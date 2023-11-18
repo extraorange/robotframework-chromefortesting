@@ -25,23 +25,31 @@ from typing import Union
 
 from robot.api.deco import keyword
 
-from main import get_setup, read_config
+from main import init_setup, init_config, init_state
 
 @keyword("Initialise Chrome For Testing")
 def main(channel: str = "Stable", path: Union[None, str] = None) -> str:
 
-    setup_data = get_setup(channel, path)
-    initialise = assess_init(read_config(setup_data))
+    setup = init_setup(channel, path)
+    config = init_config(setup)
+    state = init_state(setup, config)
 
-    return "string"
+    if state is state.UPDATE:
+
+    elif state is state.UPDATE:
+        pass
+
+    elif state.INITIAL is config.state:
+        pass                # Log info: Initialising setup
+
+    elif state.CHANNEL is config.state: 
+        pass                # Log info: Initialising new channel setup
+    
+    elif state.REPAIR is config.state:
+        pass                # Log info: Reinitializing Chrome for Testing setup
+
 
 # # # Refactoring:
-
-# response = requests.get(chromelabs_endpoint_url)
-# if (initialise and response.status_code == 200) or (not initialise and response.status_code == 200):
-#     current_version = response.json()["channels"][channel]["version"]
-#     downloading = True if not initialise else (int(current_version.replace(".", "")) > int(last_version.replace(".", "")))
-#     # TBD: Log: detected update
 
 #     if downloading:
 #         download()
@@ -55,6 +63,7 @@ def main(channel: str = "Stable", path: Union[None, str] = None) -> str:
 
 # else: 
 #     exit(0)
+    return Chrome.path
 
 if __name__ == '__main__':
     main()

@@ -56,11 +56,12 @@ Thus, to  CfT binary recognition, consider the following strategies based on you
 ```
 2. Select ```Beta``` instead of ```Stable``` channel (or any other). 
 Version divergence against consumer release of Google Chrome will result in non-compatible binary bypass. -> **OK** for anticipatory automated testing, smart.
-3. Rename default Google Chrome executable: ```chrome.exe``` -> ```googlechrome.exe``` -> **OK**, weird.
+3. Rename default Google Chrome executable: ```chrome.exe``` -> ```googlechrome.exe``` -> **OK**, obscure.
 
 ## :clipboard: Checklist
 
 - flexible platform detection
+- headless chrome suport
 - explicit Robot Framework logging
 - progress bar for downloads
 - complete error handling

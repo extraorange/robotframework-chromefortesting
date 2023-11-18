@@ -1,56 +1,53 @@
-#!/usr/bin/env python
 import datetime
-from enum import Flag
+from enum import Enum, auto
 import hashlib
 import json
 import os
-import platform as read_platform
+import platform
 import shutil
-from sys import platform
-from typing import NamedTuple, Union
+from typing import NamedTuple, Optional
 
 import requests
 from robot.api import logger
 
+from tools import get_hash
 from zip import extended_ZipFile
 
-chromelabs_endpoint_url = "https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json"
 
-class SetupData(NamedTuple):
+class State(Enum):
+    INITIAL = auto()
+    CHANNEL = auto()
+    UPDATE = auto()
+    REPAIR = auto()
+    LATEST = auto()
+
+class Setup(NamedTuple):
     platform: str
     channel: str
     path: str
     config_path: str
 
-class ConfigData(NamedTuple):
-    version: Union[str, None]
-    timestamp: Union[str, None]
-    md5: Union[str, None]
+class Config(NamedTuple):
+    version: Optional[str] = None
+    timestamp: Optional[str] = None
+    md5: Optional[str] = None
+    state: State = State.UPDATE
 
-class _MainStatus(NamedTuple):
-    initial: int = 1
-    channel: int = 0
-    repair: int = -1
+class Chrome(NamedTuple):
+    path: str
+    driver_path: str
 
-class _ExitStatus(NamedTuple):
-    updated: int = 2
-    latest: int = 0
-    failed: int = -1
 
-def get_setup(channel: str, path: Union[None, str]) -> SetupData:
+def init_setup(channel: str, path: Optional[str]) -> Setup:   # Improve: channel + headless + path
 
-    def process_platform() -> str:
-        supported_platforms = {
-            "Windows": "win64",
-            "Darwin": "mac-arm64",
-            "Linux": "linux64"
-        }
-        return supported_platforms.get(read_platform.system(), "")
+    def process_platform() -> str: # Improve: platforms: linux64, mac-arm64, mac-x64, win32, win64
+        supported_platforms = {"Windows": "win64", "Darwin": "mac-arm64", "Linux": "linux64"}
+        return supported_platforms.get(platform.system(), "")
 
-    def process_channel(channel: str) -> str:
+    def process_channel(channel: str) -> str: # Improve: channel validation
         return channel.lower().capitalize()
 
-    def process_path(path: Union[None, str]) -> str:
+    def process_path(path: Optional[str]) -> str:
         if path is None: return os.path.join(os.path.dirname(os.path.abspath(__file__)), "bin")
         elif os.path.exists(path): return path
         else: return os.path.join(os.path.dirname(os.path.abspath(__file__)), path)
@@ -60,65 +57,91 @@ def get_setup(channel: str, path: Union[None, str]) -> SetupData:
 
     path = process_path(path)
 
-    return SetupData(platform=process_platform(),
-                     channel=process_channel(channel),
-                     path=process_path(path),
-                     config_path=process_config_path(path))
+    return Setup(
+    platform=process_platform(),
+    channel=process_channel(channel), 
+    path=process_path(path), 
+    config_path=process_config_path(path)
+    )
 
 
-def read_config(setup_data: SetupData) -> Union[ConfigData, int]:
+def init_config(setup: Setup) -> Config:
 
-    if os.path.isfile(setup_data.config_path):
-        with open(setup_data.config_path, "r") as config_file:
-            config_data_json = json.load(config_file)
+    def detect_config(config_path: str) -> bool:
+        return os.path.isfile(config_path)
 
-        if setup_data.platform and setup_data.channel in config_data_json :
+    def process_config(config_path: str) -> dict:
+        with open(config_path, "r") as config_file:
             try:
-                return ConfigData(
-                    version=config_data_json[setup_data.platform].get(setup_data.channel).get("last_version"),
-                    timestamp=config_data_json[setup_data.platform].get(setup_data.channel).get("last_update"),
-                    md5=config_data_json[setup_data.platform].get(setup_data.channel).get("last_md5")
-                                )
+                return json.load(config_file)
 
-            except Exception as e:
-                logger.error(f"{e}: Compromised configuration file detected.")    # Log error
-                shutil.rmtree(setup_data.config_path)
-                return _MainStatus.repair
+            except json.JSONDecodeError: 
+                shutil.rmtree(config_path)
+                return {}
+
+    def parse_config(config_json: dict) -> Config:
+        channel_dict = config_json[setup.platform].get(setup.channel, {})
+        md5 = channel_dict.get("last_md5")
+        if channel_dict:
+            return Config(
+                version=channel_dict.get("last_version"),
+                timestamp=channel_dict.get("last_update"), 
+                md5=md5, 
+                state=State.UPDATE if get_hash(os.path.join(setup.path, setup.channel.lower())) == md5 else State.REPAIR
+                )
 
         else:
-            return _MainStatus.channel
+            return Config(
+                state=State.CHANNEL
+                )
 
-    return _MainStatus.initial
+    if detect_config(Setup.config_path):
+        config_json = process_config(setup.config_path)
+        return parse_config(config_json)
 
-
-def assess_init(setup_data: SetupData, config_data: ConfigData) -> bool:
-
-    if ConfigData:
-        return get_hash(os.path.join(setup_data.path, setup_data.channel.lower())) == config_data.md5
-
-    elif _MainStatus.initial:
-        pass # Log info: Initialising setup
-    elif _MainStatus.channel: 
-        pass # Log info: Initialising new channel setup
-    else _MainStatus.repair:
-        pass # Log info: Reinitializing Chrome for Testing setup
+    else:
+        return Config(
+            state=State.INITIAL
+        )
 
 
-def get_hash(path: str) -> str:
+def init_chromefortesting(config: Config) -> Chrome:
 
-    def calc_hash(path: str) -> str:
-        hash_func = hashlib.new("md5")
-        with open(path, 'rb') as file:
-            block = file.read(4096)
-            while len(block) > 0:
-                hash_func.update(block)
-                block = file.read(4096)
-        return hash_func.hexdigest()
+    def check_updates(channel: str, version: str) -> Config:
+        if response.status_code == 200:
+            remote_version = response.json()["channels"][setup.channel]["version"].replace(".","")
+            return Config(
+                state=State.UPDATE if remote_version != config.version else State.LATEST
+                )
 
-    return "".join([calc_hash(os.path.join(root, file)) for root, _, files in os.walk(path) for file in files])
+        else:
+            return Config(
+                state=State.LATEST
+                )
+
+    return Chrome
 
 
-# def download(channel, output_bin) -> None:
+
+
+chromelabs_url = "https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json"
+
+def request_chromelabs(url):
+    response = requests.get(chromelabs_endpoint_url)
+
+def fetch_binaries() -> bytes
+#     chrome_source = response.json()["channels"][channel]["downloads"]["chrome"]
+#     chromedriver_source = response.json()["channels"][channel]["downloads"]["chromedriver"]
+
+    chrome_source = requests.get(chrome["url"])
+    chromedriver_source = requests.get(chromedriver["url"])
+
+
+
+
+
+
+# def download(channel, output_bin, request) -> None:
 #     chrome_source = response.json()["channels"][channel]["downloads"]["chrome"]
 #     chromedriver_source = response.json()["channels"][channel]["downloads"]["chromedriver"]
 
@@ -151,10 +174,6 @@ def get_hash(path: str) -> str:
 #             break
 
 
-# def exit(status: int, *paths) -> str:
-#     # status = 2 : update
-#     # status = 1 : initial setup / latest update
-#     # status = 0 : no response / no connection
 
 #     def write_config(config_path, platform, channel, version, timestamp, md5) -> None:
 #         if os.path.isfile(config_path):
@@ -190,13 +209,18 @@ def get_hash(path: str) -> str:
 #                         }
 #                     }, json_file, indent=4)
 
-#     def expose_binaries(paths) -> None:
+
+#     def expose_binaries(chrome: Chrome) -> str:
 #         for path in paths:
 #             os.environ['PATH'] = os.pathsep.join([os.path.abspath(path), os.environ.get('PATH', '')])   # TBD: Experiment with path ordering
+        # return
 
-#     if status: 
+#     if state: 
 #         write_config(config_path, platform, channel, current_version, str(datetime.datetime.now(datetime.timezone.utc)), generate_md5(os.path.join(output_bin, channel.lower())))
 #         expose_binaries(paths)
 #     else:
 #         # Log: Fail
 #         pass
+
+
+# Process output_path with backslash escape on Windows
