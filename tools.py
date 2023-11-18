@@ -1,8 +1,19 @@
 import hashlib
 import os
-import os
 from zipfile import ZipFile, ZipInfo
 
+# Translate permissions across platforms
+class PureUnzip(ZipFile):
+    def _extract_member(self, member, path, pwd):
+        if not isinstance(member, ZipInfo):
+            member = self.getinfo(member)
+        path = super()._extract_member(member, path, pwd)
+        attr = member.external_attr >> 16
+        if attr != 0: os.chmod(path, attr)
+        return path
+
+
+# Validate binaries integrity 
 def get_hash(path: str) -> str:
 
     def calc_hash(path: str) -> str:
@@ -17,13 +28,11 @@ def get_hash(path: str) -> str:
     return "".join([calc_hash(os.path.join(root, file)) for root, _, files in os.walk(path) for file in files])
 
 
+# Expose binaries to OS
+def expose_binaries(*paths: str) -> str:
+    for path in paths:
+        os.environ['PATH'] = os.pathsep.join([os.path.abspath(path), os.environ.get('PATH', '')])
+    return True
 
-# Permissions translation across platforms
-class extended_ZipFile(ZipFile):
-    def _extract_member(self, member, path, pwd):
-        if not isinstance(member, ZipInfo):
-            member = self.getinfo(member)
-        path = super()._extract_member(member, path, pwd)
-        attr = member.external_attr >> 16
-        if attr != 0: os.chmod(path, attr)
-        return path
+
+# Process output_path with backslash escape on Windows
