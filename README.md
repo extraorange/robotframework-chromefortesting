@@ -2,10 +2,9 @@
 
 ![Version](https://img.shields.io/badge/version-0.4-%2392C444) ![Made in Ukraine](https://img.shields.io/badge/made_in_Ukraine-%23AF1717)
 
-A minimalistic tool for seamless setup of Chrome for Testing (CfT) in and within Robot Framework.
+The only extension for seamless setup of Chrome for Testing (CfT) in and within Robot Framework.
 
 For detailed information on CfT, refer to the official CfT documentation:
-
 - [Chrome for Testing Documentation](https://developer.chrome.com/blog/chrome-for-testing/)
 - [Google Chrome Labs - Chrome for Testing (CfT)](https://googlechromelabs.github.io/chrome-for-testing/)
 
@@ -18,7 +17,6 @@ This module provides a conveniet keyword that takes care of automated installati
 _is being written..._
 
 ## :hammer: Usage
-s
 In your Robot Framework script:
 ```
 # example.robot
@@ -36,7 +34,7 @@ Initialisation tree if custom ```${path}``` provided:
   └── chromefortesting_config.json     +
 ```
 
-_You might want to include your custom bin folder in your .gitignore ..._
+_You might want to include your custom bin folder in your .gitignore..._
 
 ### :warning: Oi, Windows!
 Due to Chromedriver server-like nature, if Google Chrome is installed on Windows -> Chromedriver will attempt to communicate to Google Chrome default binary install location ```C:\Program Files\Google\Chrome\Application\``` uncoditionally, preeceding system-wide $PATH look-ups and their priority order or .venv activation $PATH gatekeeping.
