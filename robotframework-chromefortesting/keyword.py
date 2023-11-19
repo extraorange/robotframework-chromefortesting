@@ -21,20 +21,24 @@ License: GNU General Public License v3.0
 
 """
 
-from typing import Union
+from typing import Optional
 
-from main import init_config, init_setup, init_state
 from robot.api.deco import keyword
 
-@keyword("Initialise Chrome For Testing")
-def main(channel: str = "Stable", path: Union[None, str] = None) -> str:
+from configuration import init_config
+from asetup import Setup
+from chromelabs import ChromeAssets
 
-    setup = init_setup(channel, path)
+@keyword("Initialise Chrome For Testing")
+def main(channel: str = "Stable", path: str = "", headless: bool = False) -> str:
+
+    setup = Setup(channel, path, headless)
     config = init_config(setup)
 
 
 
-    return Chrome.path
+
+    return ChromeAssets.path
 
 if __name__ == '__main__':
     main()
