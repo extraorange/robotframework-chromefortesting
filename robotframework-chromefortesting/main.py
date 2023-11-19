@@ -1,8 +1,7 @@
 from enum import Enum, auto
 
-from asetup import Setup
 from chromelabs import check_updates, install_chromefortesting
-from configuration import Config, create_config, init_config, update_config
+from configuration import Config, create_config, update_config
 from toolkit import expose_binaries
 
 class State(Enum):

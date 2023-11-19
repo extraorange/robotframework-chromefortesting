@@ -1,66 +1,94 @@
+import json
 import os
-from typing import NamedTuple, Optional
+import platform
 
 import requests
 from requests.models import Response
-
+from typing import Optional, Union
+from asetup import Setup
 from toolkit import PureUnzip
 
 
-chromelabs_url = "https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json"
+class ChromeLabsService():
+    def __init__(self, setup: Setup) -> None:
+        self.url: str = "https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json"
+        self.platform: str = setup.platform
+        self.channel: str = setup.channel
+        self.channel_path: str = setup.channel_path
+        self.headless: bool = setup.headless
+
+    @property
+    def response(self) -> Union[Response, None]:
+        response = requests.get(self.url)
+        return response if response.status_code == 200 else None
+
+    def check_updates(self, current_version: str) -> bool:
+        if self.response: 
+            remote_version = self.response.json()["channels"][self.channel]["version"]
+            return current_version != remote_version
+        else: 
+            return False
+
+    def install_binaries(self, platform:channel: str, output_bin: str, headless: bool) -> ChromeForTesting:
+        if self.response:
+            if headless: chrome_pool = self.response.json()["channels"][channel]["downloads"]["chrome-headless-shell"]
+            else: chrome_pool = self.response.json()["channels"][channel]["downloads"]["chrome"]
+            chromedriver_pool = self.response.json()["channels"][channel]["downloads"]["chromedriver"]
+
+            for chrome, chromedriver in zip(chrome_pool, chromedriver_pool):
+                if platform == chrome["platform"] == chromedriver["platform"]:
+
+        chrome = response.json()["channels"][channel]["downloads"]["chrome"]
+        chromedriver = response.json()["channels"][channel]["downloads"]["chromedriver"]
+
+        
+        channel_dir = os.path.join(output_bin, channel.lower())
+
+        if os.path.exists(channel_dir): shutil.rmtree(channel_dir)
+        os.makedirs(channel_dir, exist_ok=True)
+        [os.remove(os.path.join(output_bin, file)) for file in os.listdir(output_bin) if file.endswith('.zip')]
+
+        chrome_source = requests.get(chrome["url"])
+        chromedriver_source = requests.get(chromedriver["url"])
+
+        chrome_zip = os.path.join(output_bin, f"chrome_{current_version}.zip")
+        chromedriver_zip = os.path.join(output_bin, f"chromedriver_{current_version}.zip")
+
+    class ChromeForTesting():
+        def __init__(self) -> None:
+            self.chrome: str
+            self.chromedriver: str
+            version: str
+            timestamp: str
+            md5: str
 
 
-class ChromeAssets(NamedTuple):
-    path: str
-    driver_path: str
+            def get_chrome(self) -> str:
+                return self.chrome
+
+            def get_chromedriver(self) -> str:
+                return self.chromedriver
+
+            def expose_binaries(*paths: str) -> str:
+                for path in paths:
+                    os.environ['PATH'] = os.pathsep.join([os.path.abspath(path), os.environ.get('PATH', '')])
+                return
 
 
-def get_chromelabs_data(url: str) -> Optional[Response]:
-    response = requests.get(url)
-    return response if response.status_code == 200 else None
-
-def check_updates(channel: str, current_version: str) -> bool:
-    response = get_chromelabs_data(chromelabs_url)
-    remote_version = response.json()["channels"][channel]["version"] if response else None
-    return False if current_version == remote_version else False
 
 
-###############################################
-def fetch_binaries() -> bytes:
-    chrome_collection = response.json()["channels"][channel]["downloads"]["chrome"]
-    chromedriver_collection = response.json()["channels"][channel]["downloads"]["chromedriver"]
+    # def 
+    # with open(chrome_zip, "wb") as file:
+    #     file.write(chrome_source.content)
 
-    for chrome, chromedriver in zip(chrome_source, chromedriver_source):
-        if platform == chrome["platform"] == chromedriver["platform"]:
+    # with PureUnzip(chrome_zip, "r") as archive:
+    #     archive.extractall(channel_dir)
+    # os.remove(chrome_zip)
 
-def install_chromefortesting(channel, output_bin, request) -> None:
+    # with open(chromedriver_zip, "wb") as file:
+    #     file.write(chromedriver_source.content)
 
-    chrome = response.json()["channels"][channel]["downloads"]["chrome"]
-    chromedriver_source = response.json()["channels"][channel]["downloads"]["chromedriver"]
-
-    
-    channel_dir = os.path.join(output_bin, channel.lower())
-
-    if os.path.exists(channel_dir): shutil.rmtree(channel_dir)
-    os.makedirs(channel_dir, exist_ok=True)
-    [os.remove(os.path.join(output_bin, file)) for file in os.listdir(output_bin) if file.endswith('.zip')]
-
-    chrome_source = requests.get(chrome["url"])
-    chromedriver_source = requests.get(chromedriver["url"])
-    chrome_zip = os.path.join(output_bin, f"chrome_{current_version}.zip")
-    chromedriver_zip = os.path.join(output_bin, f"chromedriver_{current_version}.zip")
-
-    with open(chrome_zip, "wb") as file:
-        file.write(chrome_source.content)
-
-    with PureUnzip(chrome_zip, "r") as archive:
-        archive.extractall(channel_dir)
-    os.remove(chrome_zip)
-
-    with open(chromedriver_zip, "wb") as file:
-        file.write(chromedriver_source.content)
-
-    with PureUnzip(chromedriver_zip, "r") as archive:
-        archive.extractall(channel_dir)
-    os.remove(chromedriver_zip)
-    break
+    # with PureUnzip(chromedriver_zip, "r") as archive:
+    #     archive.extractall(channel_dir)
+    # os.remove(chromedriver_zip)
+    # break

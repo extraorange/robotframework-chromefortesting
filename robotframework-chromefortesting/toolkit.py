@@ -26,14 +26,3 @@ def get_hash(path: str) -> str:
         return hash_func.hexdigest()
 
     return "".join([calculate_hash(os.path.join(root, file)) for root, _, files in os.walk(path) for file in files])
-
-
-# Expose binaries to OS
-def expose_binaries(*paths: str) -> str:
-    for path in paths:
-        os.environ['PATH'] = os.pathsep.join([os.path.abspath(path), os.environ.get('PATH', '')])
-    return
-
-
-###############################################
-# Process output_path with backslash escape on Windows
