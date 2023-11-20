@@ -1,6 +1,6 @@
 # robotframework-chromefortesting :ukraine:
 
-![Version](https://img.shields.io/badge/version-0.4-%2392C444) ![Made in Ukraine](https://img.shields.io/badge/made_in_Ukraine-%23AF1717)
+![Version](https://img.shields.io/badge/version-0.7-%2392C444) ![Made in Ukraine](https://img.shields.io/badge/made_in_Ukraine-%23AF1717)
 
 The only extension for seamless setup of Chrome for Testing (CfT) in and within Robot Framework.
 
@@ -66,6 +66,7 @@ Thus, to CfT binary recognition, consider the following strategies based on your
 ## :clipboard: Checklist
 
 - complete platform detection
+- update schedule setter
 - headless chrome suport
 - explicit Robot Framework logging
 - progress bar for downloads
