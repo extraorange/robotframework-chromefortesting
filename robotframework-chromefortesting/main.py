@@ -1,26 +1,53 @@
-from enum import Enum, auto
+#!/usr/bin/env python
+"""
+robotframework-chromefortesting
+Chrome for Testing (CfT) for Robot Framework
 
-from chromelabs import check_updates, install_chromefortesting
-from configuration import Config, create_config, update_config
-from toolkit import expose_binaries
+├── ${output_bin}                         +
+│ ├── [platform]/                         +
+│ │ ├── chrome-[platform]/                +
+│ │ └── chromedriver-[platform]           +
+│ └── chromefortesting_config.json        +
 
-class State(Enum):
-    INITIAL = auto()
-    CHANNEL = auto()
-    UPDATE = auto()
-    REPAIR = auto()
-    LATEST = auto()
+GitHub: https://github.com/extraorange/robotframework-chromefortesting
 
+Disclaimer: Distributed as-is, without warranties or guarantees.
 
-def state(setup: Setup, config: Config, url: str) -> Config:
+Author: extraorange (d***X)
+Date: 13 Nov 2023
+Version: 0.4 (pre-release)
+License: GNU General Public License v3.0
+"""
 
-    if State.INITIAL is config.state or State.REPAIR is config.state:
-        install_chromefortesting()
-        create_config()
+from robot.api.deco import keyword
 
-    elif State.UPDATE is config.state or State.CHANNEL is config.state:
-        install_chromefortesting()
-        update_config()
+from chromelabs import install_assets, ChromeAssets, locate_assets
+from config import Config, State
+from toolkit import reset_assets
 
-    else:
-        pass
+@keyword("Initialise Chrome For Testing")
+def main(channel: str = "Stable", path: str = "", headless: bool = False) -> str:
+
+    config = Config(channel, path, headless)
+    config.detect_state()
+
+    if config.state is State.INITIAL or State.NEWCHANNEL is config.state or State.UPDATE is config.state:
+        assets = install_assets(config)
+        Config.write(config, assets)
+        assets.expose_to_system
+        return assets.parse_chrome_binary_path()
+
+    elif State.REPAIR is config.state:
+        reset_assets(config.path)
+        assets = install_assets(config)
+        Config.write(config, assets)
+        assets.expose_to_system
+        return assets.parse_chrome_binary_path()
+
+    else: # State.LATEST is config.state
+        assets = locate_assets(config)
+        assets.expose_to_system
+        return assets.parse_chrome_binary_path()
+
+if __name__ == '__main__':
+    main()
