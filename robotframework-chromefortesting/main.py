@@ -19,33 +19,26 @@ Version: 0.4 (pre-release)
 License: GNU General Public License v3.0
 """
 
+from typing import Optional
 from robot.api.deco import keyword
 
-from chromelabs import install_assets, ChromeAssets, locate_assets
+from chromelabs import load_assets
 from config import Config, State
-from toolkit import reset_assets
 
 @keyword("Initialise Chrome For Testing")
-def main(channel: str = "Stable", path: str = "", headless: bool = False) -> str:
+def main(channel: str = "Stable", path: Optional[str] = None, headless: bool = False) -> str:
 
     config = Config(channel, path, headless)
     config.detect_state()
 
-    if config.state is State.INITIAL or State.NEWCHANNEL is config.state or State.UPDATE is config.state:
-        assets = install_assets(config)
-        Config.write(config, assets)
-        assets.expose_to_system
-        return assets.parse_chrome_binary_path()
-
-    elif State.REPAIR is config.state:
-        reset_assets(config.path)
-        assets = install_assets(config)
-        Config.write(config, assets)
-        assets.expose_to_system
+    if config.state in {State.INITIAL, State.NEWCHANNEL, State.UPDATE, State.REPAIR}:
+        assets = load_assets(config)
+        config.write(assets)
+        assets.expose_to_system()
         return assets.parse_chrome_binary_path()
 
     else: # State.LATEST is config.state
-        assets = locate_assets(config)
+        assets = load_assets(config)
         assets.expose_to_system
         return assets.parse_chrome_binary_path()
 

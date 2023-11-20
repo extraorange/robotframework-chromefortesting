@@ -4,25 +4,8 @@ from typing import Optional
 import requests
 from requests.models import Response
 
-from config import Config
-from toolkit import get_hash, get_timestap, process_extract_assets, reset_assets
-
-
-class ChromeAssets():
-    def __init__(self, chrome_path: str, chromedriver: str, version: Optional[str] = None, timestamp: Optional[str] = None, md5: Optional[str] = None) -> None:
-        self.chrome: str = chrome_path
-        self.chromedriver: str = chromedriver
-        self.version: Optional[str] = version
-        self.timestamp: Optional[str] = timestamp
-        self.md5: Optional[str] = md5
-
-    def expose_to_system(self) -> None:
-        for path in [self.chrome, self.chromedriver]:
-            os.environ['PATH'] = os.pathsep.join([os.path.abspath(path), os.environ.get('PATH', '')])
-
-    def parse_chrome_binary_path(self) -> str:
-        #! Windows path processing for Robot Framework
-        return self.chrome
+from config import Config, ChromeAssets
+from toolkit import get_hash, get_timestap, process_extract_assets, reset_assets_location
 
 
 def request_chromelabs() -> Optional[Response]:
@@ -37,7 +20,7 @@ def check_updates(channel: str, version: str) -> bool:
     else: 
         return False
 
-def install_assets(config: Config) -> ChromeAssets:
+def load_assets(config: Config) -> ChromeAssets:
 
     def get_current_version(channel: str) -> str:
         response = request_chromelabs()
@@ -50,11 +33,11 @@ def install_assets(config: Config) -> ChromeAssets:
         chromedriver_pool = response.json()["channels"][config.channel]["downloads"]["chromedriver"]
 
         for _chrome, _chromedriver in zip(chrome_pool, chromedriver_pool):
-            if config.platform == _chrome[config.platform] == _chromedriver[config.platform]:
+            if config.platform == _chrome["platform"] == _chromedriver["platform"]:
 
-                reset_assets(config.channel_path)
-                _chromezip_bytes = requests.get(chrome_pool["url"])
-                _chromedriver_zip_bytes = requests.get(chromedriver_pool["url"])
+                reset_assets_location(config.channel_path)
+                _chromezip_bytes = requests.get(_chrome["url"])
+                _chromedriver_zip_bytes = requests.get(_chromedriver["url"])
                 version = get_current_version(config.channel)
                 process_extract_assets(version, config.channel_path, _chromezip_bytes, _chromedriver_zip_bytes)
                 break

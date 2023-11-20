@@ -41,7 +41,7 @@ def get_hash(path: str) -> str:
     return "".join([calculate_hash(os.path.join(root, file)) for root, _, files in os.walk(path) for file in files])
 
 # Reset current Chrome for Testing installation
-def reset_assets(path) -> None:
+def reset_assets_location(path) -> None:
     if os.path.exists(path): 
         shutil.rmtree(path)
     os.makedirs(path, exist_ok=True)
