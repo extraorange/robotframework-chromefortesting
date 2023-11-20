@@ -4,7 +4,7 @@ from typing import Optional
 import requests
 from requests.models import Response
 
-from config import Config, ChromeAssets
+from config import Config
 from toolkit import get_hash, get_timestap, process_extract_assets, reset_assets_location
 
 
