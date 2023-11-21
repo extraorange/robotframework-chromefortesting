@@ -1,50 +1,74 @@
 # robotframework-chromefortesting :ukraine:
 
-![Version](https://img.shields.io/badge/pre--release-0.3-%2392C444) ![Made in Ukraine](https://img.shields.io/badge/made_in_Ukraine-%23AF1717)
+![Version](https://img.shields.io/badge/version-0.7-%2392C444) ![Made in Ukraine](https://img.shields.io/badge/made_in_Ukraine-%23AF1717)
 
-A minimalistic tool for seamless settup of Chrome for Testing (CfT) in Robot Framework.
+The only extension for seamless setup of Chrome for Testing (CfT) in and within Robot Framework.
+
 For detailed information on CfT, refer to the official CfT documentation:
 
 - [Chrome for Testing Documentation](https://developer.chrome.com/blog/chrome-for-testing/)
 - [Google Chrome Labs - Chrome for Testing (CfT)](https://googlechromelabs.github.io/chrome-for-testing/)
 
-## Overview
+## :book: Overview
 
-This script automates the installation and configuration of Chrome and Chromedriver for testing purposes. It ensures a consistent testing environment across different platforms.
+:tophat: [**Before proceeding check release checklist**](https://github.com/extraorange/robotframework-chromefortesting/tree/prerelease4#clipboard-checklist)
 
-_in progress..._
+This module provides a conveniet keyword that takes care of automated installation and configuration of specific Chromium flavour: **Chrome for Testing**. Dynamically ensures a consistent automation testing environment across multiple platforms, by encapsulation of automatic browser infrastructure setup.
 
-## Instalation
+## :package: Instalation
 
-_in progress..._
+_is being written..._
 
-## Usage:
-### In Robot Framework:
+## :hammer: Usage
 
-```
-Initialise Chrome For Testing    ${channel}    ${bin_path}    
-```
-If channel is not provided -> default to ```STABLE```.
+In your Robot Framework script:
 
-Directory tree upon keyword execution:
-```
-├── ${bin_path}                       +
-│ ├── [platform]/                     +
-│ │ ├── chrome-[platform]/            +
-│ │ └── chromedriver-[platform]       +
-│ └── chromefortesting_config.json    +
+```robot
+
+Initialise Chrome For Testing    ${channel}=stable    ${path}=None
+Open Browser    ...    browser=chrome
 ```
 
-## Pre-release checklist
+Initialisation tree if custom `${path}` provided:
 
-- [ ] Complete README.md
-- [ ] Robust platform detection.
-- [ ] Release channels support (as of now STABLE only).
-- [ ] Custom binary location
-- [ ] Extend RF keyword to support dynamic channel selection & custom binary folder sett ng.
-- [ ] Explicit standalone logging.
-- [ ] Logging within Robot Framework.
-- [ ] Standalone availabilty (use cases outside of Robot Framework)
-- [ ] Refactor into Functions.
-- [ ] Various Python version support.
-- [ ] Release to PyPl as package.
+```
+ ${output_bin}                         +
+  ├── [channel]/                       +
+  │ ├── chrome-[platform]/             +
+  │ └── chromedriver-[platform]/       +
+  └── chromefortesting_config.json     +
+```
+
+_You might want to include your custom bin folder in your .gitignore..._
+
+### :warning: Oi, Windows!
+
+Due to Chromedriver server-like nature, if Google Chrome is installed on Windows -> Chromedriver will attempt to communicate to Google Chrome default binary install location `C:\Program Files\Google\Chrome\Application\` uncoditionally, preeceding system-wide $PATH look-ups and their priority order or .venv activation $PATH gatekeeping.
+
+Alas, this initiation takes precedence over system-wide `%PATH%` executable path and any kind of virtual environment activation `%PATH%` control.
+
+Thus, to CfT binary recognition, consider the following strategies based on your specific use case, context, workflow, or pipeline:
+
+0. [**Ditch Google Chrome.**](https://en.wikipedia.org/wiki/Nothing_to_hide_argument) -> **OK** for CI/CD agents & containers, humankind.
+1. :bulb: **Recommended** :bulb: Capture module keyword output & provide with `Open Browser` options:
+
+```robot
+
+ ${binary_location}    Initialise Chrome For Testing
+ ${options}    Set Variable    add_argument("--binary-location=${binary_location}")
+ Open Browser    ...    browser=chrome    option=${options}
+```
+
+2. Select `Beta` instead of `Stable` channel (or any other).
+   Version divergence against consumer release of Google Chrome will result in non-compatible binary bypass. -> **OK** for anticipatory automated testing, smart.
+3. Rename default Google Chrome executable: `chrome.exe` -> `googlechrome.exe` -> **OK**, obscure.
+
+## :clipboard: Checklist
+
+- complete platform detection
+- chrome binary return support
+- update schedule setter
+- headless chrome suport
+- explicit Robot Framework logging
+- progress bar for downloads
+- complete error handling

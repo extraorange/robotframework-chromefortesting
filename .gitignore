@@ -1,0 +1,3 @@
+.venv
+robotframework-chromefortesting/bin
+__pycache__
