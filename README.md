@@ -65,10 +65,10 @@ Thus, to CfT binary recognition, consider the following strategies based on your
 
 ## :clipboard: Checklist
 
-- complete platform detection
-- chrome binary return support
-- update schedule setter
-- headless chrome suport
-- explicit Robot Framework logging
-- progress bar for downloads
-- complete error handling
+- [ ] complete platform detection
+- [ ] chrome binary return support
+- [ ] update schedule setter
+- [ ] headless chrome suport
+- [ ] explicit Robot Framework logging
+- [ ] progress bar for downloads
+- [ ] complete error handling
