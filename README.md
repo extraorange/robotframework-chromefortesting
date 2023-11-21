@@ -31,10 +31,14 @@ In your Robot Framework script:
 *** Settings ***
 Library    ChromeForTesting
 
+*** Test Cases ***
+Open page
+    Open Chrome Browser    https://en.wikipedia.org/wiki/Grapefruit
+
 *** Keywords***
-Open Chrome Browser
+Open Chrome Browser    ${url}    # Create your own custom browser/page opener and adjust to your requirements
     Initialise Chrome For Testing    ${channel}=stable    ${path}=None    ${headless}=False
-    Open Browser    ...    browser=chrome
+    Open Browser    ${url}    browser=chrome
 ```
 
 Initialisation tree if custom `${path}` provided:
