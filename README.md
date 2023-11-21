@@ -35,7 +35,7 @@ Library    ChromeForTesting
 Open page
     Open Chrome Browser    https://en.wikipedia.org/wiki/Grapefruit
 
-*** Keywords***
+*** Keywords ***
 Open Chrome Browser    ${url}
     # Create your own custom browser/page opener and adjust further if required
     Initialise Chrome For Testing    ${channel}=stable    ${path}=None    ${headless}=False
