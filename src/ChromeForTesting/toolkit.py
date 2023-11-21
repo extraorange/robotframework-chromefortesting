@@ -5,7 +5,7 @@ from zipfile import ZipFile, ZipInfo
 
 # Translate permissions across platforms
 class PureZipFile(ZipFile):
-    def _extract_member(self, member, path, pwd):
+    def _extract_member(self, member, path, pwd) -> str:
         if not isinstance(member, ZipInfo):
             member = self.getinfo(member)
         path = super()._extract_member(member, path, pwd)

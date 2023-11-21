@@ -5,7 +5,7 @@ import shutil
 from typing import Optional
 
 from .chromelabs import ChromeAssets, check_updates
-from .state import State
+from .statetype import State
 from .toolkit import get_hash
 
 class Config():
@@ -41,7 +41,6 @@ class Config():
         try:
             with open(self.config_path, "r") as config_file:
                 return json.load(config_file)
-                
         except (FileNotFoundError, json.JSONDecodeError):
             if os.path.exists(self.path): shutil.rmtree(self.path)
             return {}
@@ -49,31 +48,23 @@ class Config():
     def initialise_state(self) -> State:
         if self.config_data:
             channel_data = self.config_data[self.platform].get(self.channel, {})
-
             if channel_data:
                 md5 = channel_data.get("last_md5")
-
                 if get_hash(self.channel_path) == md5:
-
                     if check_updates(self.channel, channel_data.get("last_version")):
                         return State.UPDATE
-
                     else:
                         return State.LATEST
-
                 else:
                     return State.REPAIR
-
             else:
                 return State.NEWCHANNEL
-
         else:
             return State.INITIAL
 
     def write(self, assets: ChromeAssets) -> None:
         if self.state is State.LATEST:
             return
-
         if self.platform in self.config_data:
             if self.channel in self.config_data[self.platform]:
                 self.config_data[self.platform][self.channel].update({
@@ -81,14 +72,12 @@ class Config():
                     "last_update": assets.timestamp,
                     "last_md5": assets.md5
                 })
-
             else:
                 self.config_data[self.platform][self.channel] = {
                     "last_version": assets.version,
                     "last_update": assets.timestamp,
                     "last_md5": assets.md5
                 }
-
         else:
             self.config_data[self.platform] = {
                 self.channel: {
@@ -97,6 +86,5 @@ class Config():
                     "last_md5": assets.md5
                 }
             }
-
         with open(self.config_path, "w") as json_file:
             json.dump(self.config_data, json_file, indent=4)

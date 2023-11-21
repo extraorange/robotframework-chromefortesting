@@ -59,10 +59,8 @@ def fetch_assets_zip(response: Response, config) -> Tuple[Response, Response]:
     if config.headless: chrome_pool = response.json()["channels"][config.channel]["downloads"]["chrome-headless-shell"]
     else: chrome_pool = response.json()["channels"][config.channel]["downloads"]["chrome"]
     chromedriver_pool = response.json()["channels"][config.channel]["downloads"]["chromedriver"]
-
     for _chrome, _chromedriver in zip(chrome_pool, chromedriver_pool):
         if config.platform == _chrome["platform"] == _chromedriver["platform"]:
-
             reset_local_assets(config.channel_path)
             chromezip_bytes = requests.get(_chrome["url"])
             chromedriver_zip_bytes = requests.get(_chromedriver["url"])
@@ -83,11 +81,9 @@ def extract_assets(version: str, config, *_bytes: Response) -> Tuple[str, str]:
 def download_assets(config) -> ChromeAssets:
     response = request_chromelabs()
     if response:
-
         version = get_current_version(config.channel)
         chromezip_bytes, chromedriver_zip_bytes = fetch_assets_zip(response, config)
         chrome_path, chromedriver_path = extract_assets(version, config, chromezip_bytes, chromedriver_zip_bytes)
-
         if detect_local_assets(config):
             return ChromeAssets(
                 chrome_path, 
@@ -101,12 +97,10 @@ def download_assets(config) -> ChromeAssets:
 def update_assets(config) -> ChromeAssets:
     response = request_chromelabs()
     if response:
-
         reset_local_assets(config.channel_path)
         chromezip_bytes, chromedriver_zip_bytes = fetch_assets_zip(response, config)
         version = get_current_version(config.channel)
         chrome_path, chromedriver_path = extract_assets(version, config, chromezip_bytes, chromedriver_zip_bytes)
-
         if detect_local_assets(config):
             return ChromeAssets(
                 chrome_path, 

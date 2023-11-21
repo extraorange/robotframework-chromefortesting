@@ -1,6 +1,6 @@
-.venv
-robotframework-chromefortesting/bin
 __pycache__
+.venv
 build
 dist
 robotframework_chromefortesting.egg-info
+robotframework-chromefortesting/bin

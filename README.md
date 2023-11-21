@@ -1,6 +1,6 @@
 # robotframework-chromefortesting :ukraine:
 
-![Version](https://img.shields.io/badge/version-0.8.92-%2392C444) ![Made in Ukraine](https://img.shields.io/badge/made_in_Ukraine-%23AF1717)
+![Version](https://img.shields.io/badge/version-0.8.93-%2392C444) ![Made in Ukraine](https://img.shields.io/badge/made_in_Ukraine-%23AF1717)
 
 The only extension for seamless setup of Chrome for Testing (CfT) in and within Robot Framework.
 
@@ -28,9 +28,13 @@ It is _highly recommended_ to use a virtual environment (.venv) for achieving be
 In your Robot Framework script:
 
 ```robot
+*** Settings ***
+Library    ChromeForTesting
 
-Initialise Chrome For Testing    ${channel}=stable    ${path}=None
-Open Browser    ...    browser=chrome
+*** Keywords***
+Open Chrome Browser
+    Initialise Chrome For Testing    ${channel}=stable    ${path}=None    ${headless}=False
+    Open Browser    ...    browser=chrome
 ```
 
 Initialisation tree if custom `${path}` provided:
@@ -57,7 +61,6 @@ Thus, to CfT binary recognition, consider the following strategies based on your
 1. :bulb: **Recommended** :bulb: Capture module keyword output & provide with `Open Browser` options:
 
 ```robot
-
  ${binary_location}    Initialise Chrome For Testing
  ${options}    Set Variable    add_argument("--binary-location=${binary_location}")
  Open Browser    ...    browser=chrome    option=${options}
