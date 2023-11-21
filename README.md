@@ -52,9 +52,11 @@ Thus, to harden only CfT binary recognition, consider the following strategies b
 1. :bulb: **Recommended** :bulb: Capture module keyword output & provide with `Open Browser` options:
 
 ```robot
- ${binary_location}    Initialise Chrome For Testing
- ${options}    Set Variable    add_argument("--binary-location=${binary_location}")
- Open Browser    ...    browser=chrome    option=${options}
+*** Keywords ***
+Open Chrome Browser    ${url}
+    ${binary_location}    Initialise Chrome For Testing
+    ${options}    Set Variable    add_argument("--binary-location=${binary_location}")
+    Open Browser    ${url}    browser=chrome    option=${options}
 ```
 
 2. Select `Beta` instead of `Stable` channel (or any other).
