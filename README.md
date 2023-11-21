@@ -17,7 +17,7 @@ This module provides a conveniet keyword that takes care of automated installati
 
 ## :package: Instalation
 
-```bash
+```console
 pip install robotframework-chromefortesting
 ```
 
