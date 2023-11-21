@@ -17,7 +17,11 @@ This module provides a conveniet keyword that takes care of automated installati
 
 ## :package: Instalation
 
-_is being written..._
+```bash
+pip install robotframework-chromefortesting
+```
+
+It is _highly recommended_ to use a virtual environment (.venv) for achieving best reliability. Especially, for automation projects.
 
 ## :hammer: Usage
 
