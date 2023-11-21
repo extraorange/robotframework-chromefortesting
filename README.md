@@ -44,7 +44,8 @@ Open Chrome Browser    ${url}
 
 ### :warning: Oi, Windows!
 
-On Windows Chromedriver will attempt to access Google Chrome default binary install location `C:\Program Files\Google\Chrome\Application\` uncoditionally.
+On Windows Chromedriver will attempt to access Google Chrome default binary install location uncoditionally.
+`C:\Program Files\Google\Chrome\Application\`
 Alas, such attempt of access takes precedence over system-wide `%PATH%` executable path and any kind of virtual environment activation `%PATH%` control.
 Thus, to harden CfT binary recognition, consider the following strategies based on your specific use case, context, workflow, or pipeline:
 
