@@ -15,3 +15,4 @@ setup(
     author_email='extraorangeio@pm.me',
     description='The only extension for seamless setup of Chrome for Testing (CfT) in and within Robot Framework.',
     license='GNU General Public License v3.0'
+)
