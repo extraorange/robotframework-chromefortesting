@@ -2,10 +2,10 @@ from setuptools import setup, find_packages
 
 setup(
     name='robotframework-chromefortesting',
-    version='0.8.3',
+    version='0.8.92',
     packages=find_packages(where='src'),
     package_dir={'': 'src'},
-    py_modules=['ChromeForTesting'],
+    py_modules=['keyword'],
     install_requires=[
         "requests",
         "robotframework"

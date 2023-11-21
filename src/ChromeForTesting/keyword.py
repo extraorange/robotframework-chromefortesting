@@ -11,7 +11,7 @@ Disclaimer: Distributed as-is, without warranties or guarantees.
 
 Author: extraorange
 Date: 13 Nov 2023
-Version: 0.8.3 (beta)
+Version: 0.8.92 (beta)
 License: GNU General Public License v3.0
 """
 
@@ -19,9 +19,9 @@ from typing import Optional
 
 from robot.api.deco import keyword
 
-from chromelabs import download_assets, load_local_assets, update_assets
-from config import Config
-from state import State
+from .chromelabs import download_assets, load_local_assets, update_assets
+from .config import Config
+from .state import State
 
 @keyword("Initialise Chrome For Testing")
 def main(channel: str = "Stable", path: Optional[str] = None, headless: bool = False):
