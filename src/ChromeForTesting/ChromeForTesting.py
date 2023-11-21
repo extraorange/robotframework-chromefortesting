@@ -11,7 +11,7 @@ Disclaimer: Distributed as-is, without warranties or guarantees.
 
 Author: extraorange
 Date: 13 Nov 2023
-Version: 0.8 (pre-release)
+Version: 0.8.3 (beta)
 License: GNU General Public License v3.0
 """
 
