@@ -11,6 +11,8 @@ For detailed information on CfT, refer to the official CfT documentation:
 
 ## :book: Overview
 
+:tophat: [**Before proceeding check release checklist**](https://github.com/extraorange/robotframework-chromefortesting/tree/prerelease4#clipboard-checklist)
+
 This module provides a conveniet keyword that takes care of automated installation and configuration of specific Chromium flavour: **Chrome for Testing**. Dynamically ensures a consistent automation testing environment across multiple platforms, by encapsulation of automatic browser infrastructure setup.
 
 ## :package: Instalation
