@@ -68,7 +68,7 @@ Thus, to CfT binary recognition, consider the following strategies based on your
 - [ ] complete platform detection
 - [ ] chrome binary return support
 - [ ] update schedule setter
-- [ ] headless chrome suport
+- [ ] headless chrome support
 - [ ] explicit Robot Framework logging
 - [ ] progress bar for downloads
 - [ ] complete error handling
