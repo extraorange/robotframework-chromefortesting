@@ -1,6 +1,6 @@
 # robotframework-chromefortesting :ukraine:
 
-![Version](https://img.shields.io/badge/version-0.7-%2392C444) ![Made in Ukraine](https://img.shields.io/badge/made_in_Ukraine-%23AF1717)
+![Version](https://img.shields.io/badge/version-0.8.92-%2392C444) ![Made in Ukraine](https://img.shields.io/badge/made_in_Ukraine-%23AF1717)
 
 The only extension for seamless setup of Chrome for Testing (CfT) in and within Robot Framework.
 
@@ -11,7 +11,7 @@ For detailed information on CfT, refer to the official CfT documentation:
 
 ## :book: Overview
 
-:tophat: [**Before proceeding check release checklist**](https://github.com/extraorange/robotframework-chromefortesting/tree/prerelease4#clipboard-checklist)
+:tophat: [**Before proceeding check out release checklist.**](#clipboard-checklist)
 
 This module provides a conveniet keyword that takes care of automated installation and configuration of specific Chromium flavour: **Chrome for Testing**. Dynamically ensures a consistent automation testing environment across multiple platforms, by encapsulation of automatic browser infrastructure setup.
 
@@ -65,10 +65,10 @@ Thus, to CfT binary recognition, consider the following strategies based on your
 
 ## :clipboard: Checklist
 
-- complete platform detection
-- chrome binary return support
-- update schedule setter
-- headless chrome suport
-- explicit Robot Framework logging
-- progress bar for downloads
-- complete error handling
+- [ ] complete platform detection
+- [ ] chrome binary return support
+- [ ] update schedule setter
+- [ ] headless chrome support
+- [ ] explicit Robot Framework logging
+- [ ] progress bar for downloads
+- [ ] complete error handling
