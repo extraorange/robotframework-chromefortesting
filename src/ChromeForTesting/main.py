@@ -24,9 +24,9 @@ from typing import Optional
 
 from robot.api.deco import keyword
 
-from .chromelabs import download_assets, load_local_assets, update_assets
-from .config import Config
-from .statetype import State
+from chromelabs import download_assets, load_local_assets, update_assets
+from config import Config
+from statetype import State
 
 @keyword("Initialise Chrome For Testing")
 def main(channel: str = "Stable", path: Optional[str] = None, headless: bool = False):

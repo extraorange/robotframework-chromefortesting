@@ -4,9 +4,9 @@ from platform import system
 import shutil
 from typing import Optional
 
-from .chromelabs import ChromeAssets, check_updates
-from .statetype import State
-from .toolkit import get_hash
+from chromelabs import ChromeAssets, check_updates
+from statetype import State
+from toolkit import get_hash
 
 class Config():
     def __init__(self, channel: str, path: Optional[str], headless: bool) -> None:

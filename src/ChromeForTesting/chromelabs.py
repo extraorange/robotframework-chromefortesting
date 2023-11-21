@@ -5,7 +5,7 @@ from typing import Optional, Tuple
 import requests
 from requests.models import Response
 
-from .toolkit import PureZipFile, get_hash, get_timestap
+from toolkit import PureZipFile, get_hash, get_timestap
 
 class ChromeAssets():
     def __init__(self, chrome_path: str, chromedriver: str, version: Optional[str] = None, timestamp: Optional[str] = None, md5: Optional[str] = None, headless: bool = False) -> None:
