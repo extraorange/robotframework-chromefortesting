@@ -23,10 +23,10 @@ class Config():
         platforms = {"Windows": "win64", "Darwin": "mac-arm64", "Linux": "linux64"}
         return platforms.get(system(), "")
 
-    def process_channel(self, channel) -> str:
+    def process_channel(self, channel: str) -> str:
         return channel.lower().capitalize()
 
-    def process_path(self, path) -> str: #! Improve dynamic output folder
+    def process_path(self, path: str) -> str: #! Improve dynamic output folder
         if not path: return os.path.join(os.path.dirname(os.path.abspath(__file__)), "bin")
         elif os.path.exists(path): return path
         else: return os.path.join(os.path.dirname(os.path.abspath(__file__)), path)

@@ -29,7 +29,7 @@ from config import Config
 from statetype import State
 
 @keyword("Initialise Chrome For Testing")
-def main(channel: str = "Stable", path: Optional[str] = None, headless: bool = False):
+def main(channel: str = "Stable", path: Optional[str] = None, headless: bool = False) -> str:
 
     config = Config(channel, path, headless)
     if config.state in [State.INITIAL, State.NEWCHANNEL]:
