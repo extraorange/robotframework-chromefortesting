@@ -23,8 +23,7 @@ _is being written..._
 
 In your Robot Framework script:
 
-```
-# example.robot
+```robot
 
 Initialise Chrome For Testing    ${channel}=stable    ${path}=None
 Open Browser    ...    browser=chrome
@@ -53,8 +52,7 @@ Thus, to CfT binary recognition, consider the following strategies based on your
 0. [**Ditch Google Chrome.**](https://en.wikipedia.org/wiki/Nothing_to_hide_argument) -> **OK** for CI/CD agents & containers, humankind.
 1. :bulb: **Recommended** :bulb: Capture module keyword output & provide with `Open Browser` options:
 
-```
-# example.robot
+```robot
 
  ${binary_location}    Initialise Chrome For Testing
  ${options}    Set Variable    add_argument("--binary-location=${binary_location}")
