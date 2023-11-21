@@ -49,7 +49,7 @@ Alas, this initiation takes precedence over system-wide `%PATH%` executable path
 Thus, to CfT binary recognition, consider the following strategies based on your specific use case, context, workflow, or pipeline:
 
 0. [**Ditch Google Chrome.**](https://en.wikipedia.org/wiki/Nothing_to_hide_argument) -> **OK** for CI/CD agents & containers, humankind.
-1. :bulb: _*Recommended*_ :bulb: Capture module keyword output & provide with `Open Browser` options:
+1. :bulb: **Recommended** :bulb: Capture module keyword output & provide with `Open Browser` options:
 
 ```
 # example.robot
@@ -66,6 +66,7 @@ Thus, to CfT binary recognition, consider the following strategies based on your
 ## :clipboard: Checklist
 
 - complete platform detection
+- chrome binary return support
 - update schedule setter
 - headless chrome suport
 - explicit Robot Framework logging

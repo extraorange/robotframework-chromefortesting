@@ -4,45 +4,40 @@ from platform import system
 import shutil
 from typing import Optional
 
-from toolkit import get_hash
 from chromelabs import ChromeAssets, check_updates
 from state import State
+from toolkit import get_hash
 
 class Config():
     def __init__(self, channel: str, path: Optional[str], headless: bool) -> None:
-        self.platform
-        self.channel: str = self.process_channel(channel, headless)
+        self.platform: str = self.detect_platform()
+        self.channel: str = self.process_channel(channel)
         self.path: str = self.process_path(path)
         self.headless: bool = headless
-        self.channel_path
-        self.config_path
-        self.config_data = self.parse_config_data()
-        self.state = self.initialise_state()
+        self.channel_path: str = self.process_channel_path()
+        self.config_path: str = self.process_config_path()
+        self.config_data: dict = self.load_config_data()
+        self.state: State = self.initialise_state()
 
-    @property
-    def platform(self) -> str: #! Improve detection: linux64, mac-arm64, mac-x64, win32, win64
+    def detect_platform(self) -> str: #! Improve detection: linux64, mac-arm64, mac-x64, win32, win64
         platforms = {"Windows": "win64", "Darwin": "mac-arm64", "Linux": "linux64"}
         return platforms.get(system(), "")
 
-    @staticmethod
-    def process_channel(channel: str, headless: bool) -> str:
+    def process_channel(self, channel) -> str:
         return channel.lower().capitalize()
 
-    @staticmethod
-    def process_path(path) -> str: #! Improve dynamic output folder
+    def process_path(self, path) -> str: #! Improve dynamic output folder
         if not path: return os.path.join(os.path.dirname(os.path.abspath(__file__)), "bin")
         elif os.path.exists(path): return path
         else: return os.path.join(os.path.dirname(os.path.abspath(__file__)), path)
 
-    @property
-    def channel_path(self) -> str:
+    def process_channel_path(self) -> str:
         return os.path.join(self.path, self.channel.lower())
 
-    @property
-    def config_path(self) -> str:
+    def process_config_path(self) -> str:
         return os.path.join(self.path, "cft_config.json")
 
-    def parse_config_data(self) -> dict:
+    def load_config_data(self) -> dict:
         try:
             with open(self.config_path, "r") as config_file:
                 return json.load(config_file)
@@ -70,7 +65,7 @@ class Config():
                     return State.REPAIR
 
             else:
-               return State.NEWCHANNEL
+                return State.NEWCHANNEL
 
         else:
             return State.INITIAL

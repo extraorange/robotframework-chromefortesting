@@ -1,13 +1,9 @@
 #!/usr/bin/env python
-"""
-robotframework-chromefortesting
+r"""
 Chrome for Testing (CfT) for Robot Framework
 
-├── ${output_bin}                         +
-│ ├── [platform]/                         +
-│ │ ├── chrome-[platform]/                +
-│ │ └── chromedriver-[platform]           +
-│ └── chromefortesting_config.json        +
+Initialise Chrome For Testing    ${channel}=stable    ${path}=None
+Open Browser    ...    browser=chrome
 
 GitHub: https://github.com/extraorange/robotframework-chromefortesting
 
@@ -20,19 +16,34 @@ License: GNU General Public License v3.0
 """
 
 from typing import Optional
+
 from robot.api.deco import keyword
 
-from chromelabs import load_assets
+from chromelabs import download_assets, load_local_assets, update_assets
 from config import Config
+from state import State
 
 @keyword("Initialise Chrome For Testing")
 def main(channel: str = "Stable", path: Optional[str] = None, headless: bool = False) -> str:
 
     config = Config(channel, path, headless)
-    assets = load_assets(config)
-    config.write(assets)
-    assets.expose_to_system()
-    return assets.return_chrome_binary_path()
+        
+    if config.state in [State.INITIAL, State.NEWCHANNEL]:
+        assets = download_assets(config)
+        config.write(assets)
+        assets.expose_to_system()
+        return assets.return_chrome_binary_path()
+
+    elif config.state in [State.UPDATE, State.REPAIR]:
+        assets = update_assets(config)
+        config.write(assets)
+        assets.expose_to_system()
+        return assets.return_chrome_binary_path()
+
+    elif config.state is State.LATEST:
+        assets = load_local_assets(config)
+        assets.expose_to_system()
+        return assets.return_chrome_binary_path()
 
 if __name__ == '__main__':
     main()
