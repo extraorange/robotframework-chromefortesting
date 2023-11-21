@@ -37,7 +37,7 @@ Open page
 
 *** Keywords***
 Open Chrome Browser    ${url}
-    # Create your own custom browser/page opener and adjust to your requirements
+    # Create your own custom browser/page opener and adjust further if required
     Initialise Chrome For Testing    ${channel}=stable    ${path}=None    ${headless}=False
     Open Browser    ${url}    browser=chrome
 ```
