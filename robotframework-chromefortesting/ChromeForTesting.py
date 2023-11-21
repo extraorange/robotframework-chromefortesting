@@ -11,7 +11,7 @@ Disclaimer: Distributed as-is, without warranties or guarantees.
 
 Author: extraorange
 Date: 13 Nov 2023
-Version: 0.7 (pre-release)
+Version: 0.8 (pre-release)
 License: GNU General Public License v3.0
 """
 
@@ -24,7 +24,7 @@ from config import Config
 from state import State
 
 @keyword("Initialise Chrome For Testing")
-def main(channel: str = "Stable", path: Optional[str] = None, headless: bool = False) -> str:
+def main(channel: str = "Stable", path: Optional[str] = None, headless: bool = False):
 
     config = Config(channel, path, headless)
         

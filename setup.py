@@ -1,16 +1,16 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 setup(
     name='robotframework-chromefortesting',
-    version='0.4',
-    packages=find_packages(),
+    version='0.8',
+    packages=['robotframework-chromefortesting'],
     install_requires=[
-        requests,
-        robotframework
+        "requests",
+        "robotframework"
     ],
-    entry_points={
-        'console_scripts': [
-
-        ],
-    },
+    url="https://github.com/extraorange/robotframework-chromefortesting",
+    author="extraorange",
+    author_email="extraorangeio@pm.me",
+    description="The only extension for seamless setup of Chrome for Testing (CfT) in and within Robot Framework.",
+    license="GNU General Public License v3.0"
 )
