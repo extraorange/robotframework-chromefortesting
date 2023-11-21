@@ -44,10 +44,9 @@ Open Chrome Browser    ${url}
 
 ### :warning: Oi, Windows!
 
-On Windows Chromedriver will attempt to access Google Chrome default binary install location uncoditionally.
-`C:\Program Files\Google\Chrome\Application\`
+On Windows Chromedriver will attempt to access Google Chrome default binary install location `C:\Program Files\Google\Chrome\Application\` uncoditionally.
 Alas, such attempt of access takes precedence over system-wide `%PATH%` executable path and any kind of virtual environment activation `%PATH%` control.
-Thus, to harden CfT binary recognition, consider the following strategies based on your specific use case, context, workflow, or pipeline:
+Thus, to harden only CfT binary recognition, consider the following strategies based on your specific use case, context, workflow, or pipeline:
 
 0. [Ditch Google Chrome](https://en.wikipedia.org/wiki/Nothing_to_hide_argument) -> **OK** for CI/CD agents & containers, humankind.
 1. :bulb: **Recommended** :bulb: Capture module keyword output & provide with `Open Browser` options:
