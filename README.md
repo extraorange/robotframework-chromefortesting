@@ -49,7 +49,7 @@ Alas, such attempt of access takes precedence over system-wide `%PATH%` executab
 Thus, to harden only CfT binary recognition, consider the following strategies based on your specific use case, context, workflow, or pipeline:
 
 0. [Ditch Google Chrome](https://en.wikipedia.org/wiki/Nothing_to_hide_argument) -> **OK** for CI/CD agents & containers, humankind.
-1. :bulb: **Recommended** :bulb: Capture module keyword output & provide with `Open Browser` options:
+1. :bulb: Capture module keyword output & provide with `Open Browser` options:
 
 ```robot
 *** Keywords ***
