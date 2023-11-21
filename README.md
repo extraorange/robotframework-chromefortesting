@@ -11,7 +11,7 @@ For detailed information on CfT, refer to the official CfT documentation:
 
 ## :book: Overview
 
-:tophat: [**Before proceeding check out release checklist.**](<(#clipboard-checklist)>)
+:tophat: [**Before proceeding check out release checklist.**](#clipboard-checklist)
 
 This module provides a conveniet keyword that takes care of automated installation and configuration of specific Chromium flavour: **Chrome for Testing**. Dynamically ensures a consistent automation testing environment across multiple platforms, by encapsulation of automatic browser infrastructure setup.
 
