@@ -21,7 +21,7 @@ This module provides a conveniet keyword that takes care of automated installati
 pip install robotframework-chromefortesting
 ```
 
-It is _highly recommended_ to use a virtual environment (.venv) for achieving best reliability. Especially, for automation projects.
+It is _highly recommended_ to use a virtual environment (.venv) for achieving best reliability.
 
 ## :hammer: Usage
 
