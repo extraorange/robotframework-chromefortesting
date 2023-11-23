@@ -1,6 +1,7 @@
 import datetime
 import hashlib
 import os
+from subprocess import run as subprocess
 from zipfile import ZipFile, ZipInfo
 
 # Translate permissions across platforms
@@ -30,3 +31,15 @@ def get_hash(path: str) -> str:
 # Generate timestamp
 def get_timestap() -> str:
     return str(datetime.datetime.now(datetime.timezone.utc))
+
+# Permission setting
+def set_permissions(platform, chrome_path, chromedriver_path) -> None:
+    if "win" in platform:
+        subprocess.run(['icacls', os.path.join(chrome_path, "chrome.exe"), '/grant', '*S-1-1-0:(RX)'])
+        subprocess.run(['icacls', os.path.join(chromedriver_path, "chromedriver.exe"), '/grant', '*S-1-1-0:(RX)'])
+    elif "mac" in platform:
+        os.chmod(os.path.join(chrome_path, "Google Chrome for Testing.app"), 0o755)
+        os.chmod(os.path.join(chromedriver_path, "chromedriver"), 0o755)
+    else:
+        os.chmod(os.path.join(chrome_path, "chrome"), 0o755)
+        os.chmod(os.path.join(chromedriver_path, "chromedriver"), 0o755)
