@@ -20,7 +20,9 @@ class Config():
         self.state: State = self.initialise_state()
 
     def detect_platform(self) -> str: #! Improve detection: linux64, mac-arm64, mac-x64, win32, win64
-        platforms = {"Windows": "win64", "Darwin": "mac-arm64", "Linux": "linux64"}
+        platforms = {"Windows": "win64", 
+                     "Darwin": "mac-arm64", 
+                     "Linux": "linux64"}
         return platforms.get(system(), "")
 
     def process_channel(self, channel: str) -> str:

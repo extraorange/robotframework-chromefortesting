@@ -1,5 +1,6 @@
 import os
 import shutil
+from subprocess import run as subprocess
 from typing import Optional, Tuple
 
 import requests
@@ -67,6 +68,18 @@ def fetch_assets_zip(response: Response, config) -> Tuple[Response, Response]:
             return chromezip_bytes, chromedriver_zip_bytes
 
 def extract_assets(version: str, config, *_bytes: Response) -> Tuple[str, str]:
+
+    def set_permissions(platform, chrome_path, chromedriver_path) -> None:
+        if "win" in platform:
+            subprocess.run(['icacls', os.path.join(chrome_path, "chrome.exe"), '/grant', '*S-1-1-0:(RX)'])
+            subprocess.run(['icacls', os.path.join(chromedriver_path, "chromedriver.exe"), '/grant', '*S-1-1-0:(RX)'])
+        elif "mac" in platform:
+            os.chmod(os.path.join(chrome_path, "Google Chrome for Testing.app"), 0o755)
+            os.chmod(os.path.join(chromedriver_path, "chromedriver"), 0o755)
+        else:
+            os.chmod(os.path.join(chrome_path, "chrome"), 0o755)
+            os.chmod(os.path.join(chromedriver_path, "chromedriver"), 0o755)
+
     zip_path = os.path.join(config.channel_path, f"chrome_{version}.zip")
     for bytes in _bytes:
         with open(zip_path, "wb") as file:
@@ -76,6 +89,7 @@ def extract_assets(version: str, config, *_bytes: Response) -> Tuple[str, str]:
         os.remove(zip_path)
     chrome_path = os.path.join(config.channel_path, f"chrome-{config.platform}") if not config.headless else os.path.join(config.channel_path, f"chrome-headless-shell-{config.platform}")
     chromedriver_path = os.path.join(config.channel_path, f"chromedriver-{config.platform}")
+    set_permissions(config.platform, chrome_path, chromedriver_path)
     return chrome_path, chromedriver_path
 
 def download_assets(config) -> ChromeAssets:
