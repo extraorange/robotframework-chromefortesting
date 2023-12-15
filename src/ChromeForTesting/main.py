@@ -16,7 +16,7 @@ Disclaimer: Distributed as-is, without warranties or guarantees.
 
 Author: extraorange
 Date: 13 Nov 2023
-Version: 0.8.92 (beta)
+Version: 0.9 (beta)
 License: GNU General Public License v3.0
 '''
 
@@ -29,10 +29,12 @@ from config import Config
 from statetype import State
 
 @keyword("Initialise Chrome For Testing")
-def main(channel: str = "Stable", path: Optional[str] = None, headless: bool = False) -> str:
+def main(channel: str = "Stable", path: Optional[str] = None, headless: bool = False):
 
     config = Config(channel, path, headless)
-    if config.state in [State.INITIAL, State.NEWCHANNEL]:
+    if config.state is State.LIVE:
+        pass
+    elif config.state in [State.INITIAL, State.NEWCHANNEL]:
         assets = download_assets(config)
         config.write(assets)
         assets.expose_to_system()

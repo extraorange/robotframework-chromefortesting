@@ -48,7 +48,9 @@ class Config():
             return {}
 
     def initialise_state(self) -> State:
-        if self.config_data:
+        if self.path in os.environ['PATH']: 
+            return State.LIVE
+        elif self.config_data:
             channel_data = self.config_data[self.platform].get(self.channel, {})
             if channel_data:
                 md5 = channel_data.get("last_md5")
