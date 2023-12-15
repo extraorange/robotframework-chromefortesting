@@ -29,9 +29,11 @@ from config import Config
 from statetype import State
 
 @keyword("Initialise Chrome For Testing")
-def main(channel: str = "Stable", path: Optional[str] = None, headless: bool = False) -> str:
+def main(channel: str = "Stable", path: Optional[str] = None, headless: bool = False):
 
     config = Config(channel, path, headless)
+    if config.state is State.LIVE:
+        pass
     if config.state in [State.INITIAL, State.NEWCHANNEL]:
         assets = download_assets(config)
         config.write(assets)

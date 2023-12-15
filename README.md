@@ -56,7 +56,7 @@ Thus, to harden only CfT binary recognition, consider the following strategies b
 Open Chrome Browser    ${url}
     ${binary_location}    Initialise Chrome For Testing    ${channel}=stable
     ${options}    Set Variable    add_argument("--binary-location=${binary_location}")
-    Open Browser    ${url}    browser=chrome    option=${options}
+    Open Browser    ${url}    chrome    option=${options}
 ```
 
 2. Select `Beta` instead of `Stable` channel (or any other).
