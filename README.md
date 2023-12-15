@@ -67,7 +67,6 @@ Open Chrome Browser    ${url}
 
 - [ ] complete platform detection
 - [ ] chrome binary return support
-- [ ] update schedule setter
 - [ ] headless chrome support
 - [ ] explicit Robot Framework logging
 - [ ] progress bar for downloads
