@@ -34,7 +34,7 @@ def main(channel: str = "Stable", path: Optional[str] = None, headless: bool = F
     config = Config(channel, path, headless)
     if config.state is State.LIVE:
         pass
-    if config.state in [State.INITIAL, State.NEWCHANNEL]:
+    elif config.state in [State.INITIAL, State.NEWCHANNEL]:
         assets = download_assets(config)
         config.write(assets)
         assets.expose_to_system()
