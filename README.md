@@ -1,6 +1,6 @@
 # robotframework-chromefortesting :ukraine:
 
-![Version](https://img.shields.io/badge/version-0.8.93-%2392C444) ![Made in Ukraine](https://img.shields.io/badge/made_in_Ukraine-%23AF1717)
+![Version](https://img.shields.io/badge/version-0.9-%2392C444) ![Made in Ukraine](https://img.shields.io/badge/made_in_Ukraine-%23AF1717)
 
 The only extension for seamless setup of Chrome for Testing (CfT) in and within Robot Framework.
 
@@ -56,7 +56,7 @@ Thus, to harden only CfT binary recognition, consider the following strategies b
 Open Chrome Browser    ${url}
     ${binary_location}    Initialise Chrome For Testing    ${channel}=stable
     ${options}    Set Variable    add_argument("--binary-location=${binary_location}")
-    Open Browser    ${url}    chrome    option=${options}
+    Open Browser    ${url}    chrome    options=${options}
 ```
 
 2. Select `Beta` instead of `Stable` channel (or any other).
