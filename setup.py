@@ -1,12 +1,12 @@
 from setuptools import setup, find_packages
 
-with open("README", 'r') as f:
+with open("README.md", 'r') as f:
     long_description = f.read()
 
 setup(
     name='robotframework-chromefortesting',
     version='0.9',
-    packages=find_packages(),
+    packages=find_packages(where='src'),
     package_dir={'': 'src'},
     install_requires=[
         "requests",
