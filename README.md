@@ -1,6 +1,6 @@
 # robotframework-chromefortesting :ukraine:
 
-![Version](https://img.shields.io/badge/version-0.9-%2392C444) ![Made in Ukraine](https://img.shields.io/badge/made_in_Ukraine-%23AF1717)
+![Version](https://img.shields.io/badge/version-0.91-%2392C444) ![Made in Ukraine](https://img.shields.io/badge/made_in_Ukraine-%23AF1717)
 
 The only extension for seamless setup of Chrome for Testing (CfT) in and within Robot Framework.
 
@@ -62,12 +62,3 @@ Open Chrome Browser    ${url}
 2. Select `Beta` instead of `Stable` channel (or any other).
    Version divergence against consumer release of Google Chrome will result in non-compatible binary bypass. -> **OK** for anticipatory automated testing, smart.
 3. Rename default Google Chrome executable: `chrome.exe` -> `googlechrome.exe` -> **OK**, obscure.
-
-## :clipboard: Checklist
-
-- [ ] complete platform detection
-- [ ] chrome binary return support
-- [ ] headless chrome support
-- [ ] explicit Robot Framework logging
-- [ ] progress bar for downloads
-- [ ] complete error handling
