@@ -1,11 +1,11 @@
 import datetime
 import hashlib
 import os
-from subprocess import run as subprocess
+import subprocess
 from zipfile import ZipFile, ZipInfo
 
 # Translate permissions across platforms
-class PureZipFile(ZipFile):
+class ExtendedZipFile(ZipFile):
     def _extract_member(self, member, path, pwd) -> str:
         if not isinstance(member, ZipInfo):
             member = self.getinfo(member)

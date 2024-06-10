@@ -5,7 +5,7 @@ from typing import Optional, Tuple
 import requests
 from requests.models import Response
 
-from toolkit import PureZipFile, get_hash, get_timestap, set_permissions
+from toolkit import ExtendedZipFile, get_hash, get_timestap, set_permissions
 
 class ChromeAssets():
     def __init__(self, chrome_path: str, chromedriver: str, version: Optional[str] = None, timestamp: Optional[str] = None, md5: Optional[str] = None, headless: bool = False) -> None:
@@ -71,7 +71,7 @@ def extract_assets(version: str, config, *_bytes: Response) -> Tuple[str, str]:
     for bytes in _bytes:
         with open(zip_path, "wb") as file:
             file.write(bytes.content)
-        with PureZipFile(zip_path, "r") as archive:
+        with ExtendedZipFile(zip_path, "r") as archive:
             archive.extractall(config.channel_path)
         os.remove(zip_path)
     chrome_path = os.path.join(config.channel_path, f"chrome-{config.platform}") if not config.headless else os.path.join(config.channel_path, f"chrome-headless-shell-{config.platform}")
