@@ -3,12 +3,7 @@
 Chrome for Testing (CfT) for Robot Framework
 
 *** Settings ***
-Library    ChromeForTesting
-
-*** Keywords***
-Open Chrome Browser
-    Initialise Chrome For Testing    ${channel}=stable    ${path}=None    ${headless}=False
-    Open Browser    ...    browser=chrome
+Library    ChromeForTesting    ${channel}=stable    ${headless}=False
 
 GitHub: https://github.com/extraorange/robotframework-chromefortesting
 
@@ -20,34 +15,24 @@ Version: 0.9 (beta)
 License: GNU General Public License v3.0
 '''
 
-from typing import Optional
-
-from robot.api.deco import keyword
-
 from chromelabs import download_assets, load_local_assets, update_assets
-from config import Config
-from statetype import State
+from config import Config, State
 
-@keyword("Initialise Chrome For Testing")
-def main(channel: str = "Stable", path: Optional[str] = None, headless: bool = False):
 
-    config = Config(channel, path, headless)
-    if config.state is State.LIVE:
-        pass
-    elif config.state in [State.INITIAL, State.NEWCHANNEL]:
-        assets = download_assets(config)
-        config.write(assets)
-        assets.expose_to_system()
-        return assets.return_chrome_binary_path()
-    elif config.state in [State.UPDATE, State.REPAIR]:
-        assets = update_assets(config)
-        config.write(assets)
-        assets.expose_to_system()
-        return assets.return_chrome_binary_path()
-    elif config.state is State.LATEST:
-        assets = load_local_assets(config)
-        assets.expose_to_system()
-        return assets.return_chrome_binary_path()
+class ChromeForTesting:
+    def __init__(self, channel: str = "stable", headless: bool = False):
 
-if __name__ == '__main__':
-    main()
+        config = Config(channel, headless)
+        if config.state is State.LIVE:
+            pass
+        elif config.state in [State.INITIAL, State.NEWCHANNEL]:
+            assets = download_assets(config)
+            config.write(assets)
+            assets.expose_to_system()
+        elif config.state in [State.UPDATE, State.REPAIR]:
+            assets = update_assets(config)
+            config.write(assets)
+            assets.expose_to_system()
+        elif config.state is State.LATEST:
+            assets = load_local_assets(config)
+            assets.expose_to_system()
