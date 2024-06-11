@@ -4,8 +4,8 @@ import os
 from platform import system
 import shutil
 
-from chromelabs import check_updates
-from toolkit import get_hash
+from .chromelabs import check_updates
+from .toolkit import get_hash
 
 class State(Enum):
     LIVE = auto()

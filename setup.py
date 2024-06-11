@@ -5,7 +5,7 @@ with open("README.md", 'r') as f:
 
 setup(
     name='robotframework-chromefortesting',
-    version='0.91',
+    version='0.9.1',
     packages=find_packages(where='src'),
     package_dir={'': 'src'},
     install_requires=[
@@ -22,9 +22,7 @@ setup(
     'Intended Audience :: Developers',
     'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
     'Operating System :: OS Independent',
-    'Framework :: Robot Framework :: Library'
-    'Programming Language :: Python :: 2',
-    'Programming Language :: Python :: 2.7',
+    'Framework :: Robot Framework :: Library',
     'Programming Language :: Python :: 3',
     'Programming Language :: Python :: 3.6',
     'Programming Language :: Python :: 3.7',

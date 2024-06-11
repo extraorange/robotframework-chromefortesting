@@ -15,8 +15,8 @@ Version: 0.91 (beta)
 License: GNU General Public License v3.0
 '''
 
-from chromelabs import download_assets, load_local_assets, update_assets
-from config import Config, State
+from .chromelabs import download_assets, load_local_assets, update_assets
+from .config import Config, State
 
 
 class ChromeForTesting:

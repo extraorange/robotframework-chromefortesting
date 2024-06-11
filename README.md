@@ -1,6 +1,6 @@
 # robotframework-chromefortesting :ukraine:
 
-![Version](https://img.shields.io/badge/version-0.91-%2392C444) ![Made in Ukraine](https://img.shields.io/badge/made_in_Ukraine-%23AF1717)
+![Version](https://img.shields.io/badge/version-0.9.1-%2392C444) ![Made in Ukraine](https://img.shields.io/badge/made_in_Ukraine-%23AF1717)
 
 The only extension for seamless setup of Chrome for Testing (CfT) in and within Robot Framework.
 
