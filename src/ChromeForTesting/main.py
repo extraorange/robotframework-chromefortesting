@@ -1,26 +1,31 @@
 #!/usr/bin/env python
-'''
-Chrome for Testing (CfT) for Robot Framework
 
-*** Settings ***
-Library    ChromeForTesting    ${channel}=stable    ${headless}=False
-
-GitHub: https://github.com/extraorange/robotframework-chromefortesting
-
-Disclaimer: Distributed as-is, without warranties or guarantees.
-
-Author: extraorange
-Date: 13 Nov 2023
-Version: 0.91 (beta)
-License: GNU General Public License v3.0
-'''
+# Chrome for Testing (CfT) for Robot Framework
+# GitHub: https://github.com/extraorange/robotframework-chromefortesting
+# Disclaimer: Distributed as-is, without warranties or guarantees.
+# Author: extraorange
+# Date: 13 Nov 2023
+# Version: 0.9.1
+# License: GNU General Public License v3.0
 
 from .chromelabs import download_assets, load_local_assets, update_assets
 from .config import Config, State
 
-
 class ChromeForTesting:
-    def __init__(self, channel: str = "stable", headless: bool = False):
+
+    """
+    ## Chrome for Testing (CfT) for Robot Framework
+    Automated installation & initialization of Chrome For Testing binaries with system autodetection, autoupdates, and integrity check for seamless operation.
+    #### Usage:
+    Import as any other library in Settings section of .robot file.
+    ```
+    Library    ChromeForTesting    ${channel}=Stable    ${headless}=${False}
+    ```
+    #### Arguments:
+        - ${channel}: Specify the desired version branch of CfT (Stable, Beta, Dev, Canary)
+        - ${headless}: Configure CfT to run in headless mode for renderless testing.
+    """
+    def __init__(self, channel: str = "stable", headless: bool = True):
 
         config = Config(channel, headless)
         if config.state is State.LIVE:

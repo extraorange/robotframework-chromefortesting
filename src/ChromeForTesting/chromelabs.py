@@ -4,6 +4,7 @@ from typing import Optional, Tuple
 
 import requests
 from requests.models import Response
+from selenium import webdriver
 
 from .toolkit import ExtendedZipFile, get_hash, get_timestap, set_permissions
 
@@ -17,6 +18,7 @@ class ChromeAssets():
         self.headless: bool = headless
 
     def expose_to_system(self):
+        webdriver.ChromeOptions.binary_location = self.chrome
         for path in [self.chrome, self.chromedriver]:
             os.environ['PATH'] = os.path.abspath(path) + os.pathsep + os.environ.get('PATH', '')
 
@@ -83,7 +85,7 @@ def download_assets(config) -> ChromeAssets:
             chromezip_bytes, chromedriver_zip_bytes = download_result
             chrome_path, chromedriver_path = extract_assets(version, config, chromezip_bytes, chromedriver_zip_bytes)
             if detect_local_assets(config):
-                set_permissions(config.platform, chrome_path, chromedriver_path)
+                set_permissions(config.platform, chrome_path, chromedriver_path, config.headless)
                 return ChromeAssets(
                     chrome_path, 
                     chromedriver_path, 
@@ -103,7 +105,7 @@ def update_assets(config) -> ChromeAssets:
             reset_local_assets(config.channel_path)
             chrome_path, chromedriver_path = extract_assets(version, config, chromezip_bytes, chromedriver_zip_bytes)
             if detect_local_assets(config):
-                set_permissions(config.platform, chrome_path, chromedriver_path)
+                set_permissions(config.platform, chrome_path, chromedriver_path, config.headless)
                 return ChromeAssets(
                     chrome_path, 
                     chromedriver_path, 
@@ -117,7 +119,7 @@ def load_local_assets(config) -> ChromeAssets:
     detect_local_assets(config)
     chrome_path = os.path.join(config.channel_path, f"chrome-{config.platform}") if not config.headless else os.path.join(config.channel_path, f"chrome-headless-shell-{config.platform}")
     chromedriver_path = os.path.join(config.channel_path, f"chromedriver-{config.platform}")
-    set_permissions(config.platform, chrome_path, chromedriver_path)
+    set_permissions(config.platform, chrome_path, chromedriver_path, config.headless)
     return ChromeAssets(
         chrome_path, 
         chromedriver_path
