@@ -5,7 +5,7 @@
 # Disclaimer: Distributed as-is, without warranties or guarantees.
 # Author: extraorange
 # Date: 13 Nov 2023
-# Version: 0.9.1
+# Version: 0.9.3
 # License: GNU General Public License v3.0
 
 from .chromelabs import download_assets, load_local_assets, update_assets
