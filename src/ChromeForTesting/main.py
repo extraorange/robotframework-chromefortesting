@@ -12,20 +12,20 @@ from .chromelabs import download_assets, load_local_assets, update_assets
 from .config import Config, State
 
 class ChromeForTesting:
-
     """
-    ## Chrome for Testing (CfT) for Robot Framework
-    Automated installation & initialization of Chrome For Testing binaries with system autodetection, autoupdates, and integrity check for seamless operation.
-    #### Usage:
-    Import as any other library in Settings section of .robot file.
+    Chrome for Testing (CfT) for Robot Framework
+    Automated installation & initialization of Chrome For Testing binaries with 
+    system autodetection, autoupdates, and integrity check for seamless operation.
+    
+    Usage: import as any other library in "Settings" section of .robot file.
     ```
     Library    ChromeForTesting    ${channel}=Stable    ${headless}=${False}
     ```
-    #### Arguments:
+    Arguments:
         - ${channel}: Specify the desired version branch of CfT (Stable, Beta, Dev, Canary)
         - ${headless}: Configure CfT to run in headless mode for renderless testing.
     """
-    def __init__(self, channel: str = "stable", headless: bool = True):
+    def __init__(self, channel: str = "stable", headless: bool = False):
 
         config = Config(channel, headless)
         if config.state is State.LIVE:
@@ -41,3 +41,6 @@ class ChromeForTesting:
         elif config.state is State.LATEST:
             assets = load_local_assets(config)
             assets.expose_to_system()
+
+    def empty_keyword(self):
+        pass

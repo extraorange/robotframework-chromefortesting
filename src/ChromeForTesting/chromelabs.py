@@ -4,7 +4,6 @@ from typing import Optional, Tuple
 
 import requests
 from requests.models import Response
-from selenium import webdriver
 
 from .toolkit import ExtendedZipFile, get_hash, get_timestap, set_permissions
 
@@ -18,7 +17,6 @@ class ChromeAssets():
         self.headless: bool = headless
 
     def expose_to_system(self):
-        webdriver.ChromeOptions.binary_location = self.chrome
         for path in [self.chrome, self.chromedriver]:
             os.environ['PATH'] = os.path.abspath(path) + os.pathsep + os.environ.get('PATH', '')
 
