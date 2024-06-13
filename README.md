@@ -2,7 +2,7 @@
 
 ![Version](https://img.shields.io/badge/version-0.9.3-%2392C444)
 
-The only extension for seamless setup of Chrome for Testing (CfT) in and within Robot Framework.
+The only liibrary for seamless setup of Chrome for Testing (CfT) in and within Robot Framework.
 
 For detailed information on CfT, refer to the official CfT documentation:
 
@@ -11,9 +11,9 @@ For detailed information on CfT, refer to the official CfT documentation:
 
 ## :book: Overview
 
-:tophat: [**Before proceeding check out release checklist**](#clipboard-checklist)
-
-This module provides a conveniet keyword that takes care of automated installation and configuration of specific Chromium flavour: **Chrome for Testing**. Dynamically ensures a consistent automation testing environment across multiple platforms, by encapsulation of automatic browser infrastructure setup.
+This library provides an automated installation and initialisation of **Chrome for Testing**. 
+Dynamically ensures a consistent automation testing environment across multiple platforms.
+Safeguarded for atumatical update & repair.
 
 ## :package: Instalation
 
