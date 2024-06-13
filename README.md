@@ -13,7 +13,7 @@ For detailed information on CfT, refer to the official CfT documentation:
 
 This library provides an automated installation and initialisation of **Chrome for Testing**. 
 Dynamically ensures a consistent automation testing environment across multiple platforms.
-Safeguarded for atumatical update & repair.
+Safeguarded for automatical update and repair.
 
 ## :package: Instalation
 
