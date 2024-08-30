@@ -1,12 +1,12 @@
 from setuptools import setup, find_packages
 
-with open("README", 'r') as f:
+with open("README.md", 'r') as f:
     long_description = f.read()
 
 setup(
     name='robotframework-chromefortesting',
-    version='0.9',
-    packages=find_packages(),
+    version='0.9.3',
+    packages=find_packages(where='src'),
     package_dir={'': 'src'},
     install_requires=[
         "requests",
@@ -22,9 +22,7 @@ setup(
     'Intended Audience :: Developers',
     'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
     'Operating System :: OS Independent',
-    'Framework :: Robot Framework :: Library'
-    'Programming Language :: Python :: 2',
-    'Programming Language :: Python :: 2.7',
+    'Framework :: Robot Framework :: Library',
     'Programming Language :: Python :: 3',
     'Programming Language :: Python :: 3.6',
     'Programming Language :: Python :: 3.7',

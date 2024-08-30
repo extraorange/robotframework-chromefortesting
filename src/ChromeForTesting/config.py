@@ -1,18 +1,25 @@
+from enum import Enum, auto
 import json
 import os
 from platform import system
 import shutil
-from typing import Optional
 
-from chromelabs import ChromeAssets, check_updates
-from statetype import State
-from toolkit import get_hash
+from .chromelabs import check_updates
+from .toolkit import get_hash
+
+class State(Enum):
+    LIVE = auto()
+    INITIAL = auto()
+    LATEST = auto()
+    UPDATE = auto()
+    NEWCHANNEL = auto()
+    REPAIR = auto()
 
 class Config():
-    def __init__(self, channel: str, path: Optional[str], headless: bool) -> None:
+    def __init__(self, channel: str, headless: bool):
         self.platform: str = self.detect_platform()
         self.channel: str = self.process_channel(channel)
-        self.path: str = self.process_path(path)
+        self.path: str = self.process_path()
         self.headless: bool = headless
         self.channel_path: str = self.process_channel_path()
         self.config_path: str = self.process_config_path()
@@ -28,10 +35,8 @@ class Config():
     def process_channel(self, channel: str) -> str:
         return channel.lower().capitalize()
 
-    def process_path(self, path: Optional[str]) -> str: #! Improve dynamic output folder
-        if not path: return os.path.join(os.path.dirname(os.path.abspath(__file__)), "bin")
-        elif os.path.exists(path): return path
-        else: return os.path.join(os.path.dirname(os.path.abspath(__file__)), path)
+    def process_path(self) -> str:
+        return os.path.join(os.path.dirname(os.path.abspath(__file__)), "bin")
 
     def process_channel_path(self) -> str:
         return os.path.join(self.path, self.channel.lower())
@@ -66,7 +71,7 @@ class Config():
         else:
             return State.INITIAL
 
-    def write(self, assets: ChromeAssets) -> None:
+    def write(self, assets) -> None:
         if self.state is State.LATEST:
             return
         if self.platform in self.config_data:

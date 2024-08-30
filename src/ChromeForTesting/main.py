@@ -1,53 +1,46 @@
 #!/usr/bin/env python
-'''
-Chrome for Testing (CfT) for Robot Framework
 
-*** Settings ***
-Library    ChromeForTesting
+# Chrome for Testing (CfT) for Robot Framework
+# GitHub: https://github.com/extraorange/robotframework-chromefortesting
+# Disclaimer: Distributed as-is, without warranties or guarantees.
+# Author: extraorange
+# Date: 13 Nov 2023
+# Version: 0.9.3
+# License: GNU General Public License v3.0
 
-*** Keywords***
-Open Chrome Browser
-    Initialise Chrome For Testing    ${channel}=stable    ${path}=None    ${headless}=False
-    Open Browser    ...    browser=chrome
+from .chromelabs import download_assets, load_local_assets, update_assets
+from .config import Config, State
 
-GitHub: https://github.com/extraorange/robotframework-chromefortesting
+class ChromeForTesting:
+    """
+    Chrome for Testing (CfT) for Robot Framework
+    Automated installation & initialization of Chrome For Testing binaries with 
+    system autodetection, autoupdates, and integrity check for seamless operation.
+    
+    Usage: import as any other library in "Settings" section of .robot file.
+    ```
+    Library    ChromeForTesting    ${channel}=Stable    ${headless}=${False}
+    ```
+    Arguments:
+        - ${channel}: Specify the desired version branch of CfT (Stable, Beta, Dev, Canary)
+        - ${headless}: Configure CfT to run in headless mode for renderless testing.
+    """
+    def __init__(self, channel: str = "stable", headless: bool = False):
 
-Disclaimer: Distributed as-is, without warranties or guarantees.
+        config = Config(channel, headless)
+        if config.state is State.LIVE:
+            pass
+        elif config.state in [State.INITIAL, State.NEWCHANNEL]:
+            assets = download_assets(config)
+            config.write(assets)
+            assets.expose_to_system()
+        elif config.state in [State.UPDATE, State.REPAIR]:
+            assets = update_assets(config)
+            config.write(assets)
+            assets.expose_to_system()
+        elif config.state is State.LATEST:
+            assets = load_local_assets(config)
+            assets.expose_to_system()
 
-Author: extraorange
-Date: 13 Nov 2023
-Version: 0.9 (beta)
-License: GNU General Public License v3.0
-'''
-
-from typing import Optional
-
-from robot.api.deco import keyword
-
-from chromelabs import download_assets, load_local_assets, update_assets
-from config import Config
-from statetype import State
-
-@keyword("Initialise Chrome For Testing")
-def main(channel: str = "Stable", path: Optional[str] = None, headless: bool = False):
-
-    config = Config(channel, path, headless)
-    if config.state is State.LIVE:
+    def empty_keyword(self):
         pass
-    elif config.state in [State.INITIAL, State.NEWCHANNEL]:
-        assets = download_assets(config)
-        config.write(assets)
-        assets.expose_to_system()
-        return assets.return_chrome_binary_path()
-    elif config.state in [State.UPDATE, State.REPAIR]:
-        assets = update_assets(config)
-        config.write(assets)
-        assets.expose_to_system()
-        return assets.return_chrome_binary_path()
-    elif config.state is State.LATEST:
-        assets = load_local_assets(config)
-        assets.expose_to_system()
-        return assets.return_chrome_binary_path()
-
-if __name__ == '__main__':
-    main()
