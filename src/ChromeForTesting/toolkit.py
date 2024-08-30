@@ -29,7 +29,7 @@ def get_hash(path: str) -> str:
     return "".join([calculate_hash(os.path.join(root, file)) for root, _, files in os.walk(path) for file in files])
 
 # Generate timestamp
-def get_timestap() -> str:
+def get_timestamp() -> str:
     return str(datetime.datetime.now(datetime.timezone.utc))
 
 # Permission setting

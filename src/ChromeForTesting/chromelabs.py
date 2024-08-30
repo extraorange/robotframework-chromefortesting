@@ -5,7 +5,7 @@ from typing import Optional, Tuple
 import requests
 from requests.models import Response
 
-from .toolkit import ExtendedZipFile, get_hash, get_timestap, set_permissions
+from .toolkit import ExtendedZipFile, get_hash, get_timestamp, set_permissions
 
 class ChromeAssets():
     def __init__(self, chrome_path: str, chromedriver: str, version: Optional[str] = None, timestamp: Optional[str] = None, md5: Optional[str] = None, headless: bool = False):
@@ -88,7 +88,7 @@ def download_assets(config) -> ChromeAssets:
                     chrome_path, 
                     chromedriver_path, 
                     version, 
-                    get_timestap(), 
+                    get_timestamp(), 
                     get_hash(config.channel_path), 
                     config.headless
                     )
@@ -108,7 +108,7 @@ def update_assets(config) -> ChromeAssets:
                     chrome_path, 
                     chromedriver_path, 
                     get_current_version(config.channel), 
-                    get_timestap(), 
+                    get_timestamp(), 
                     get_hash(config.channel_path), 
                     config.headless
                     )
