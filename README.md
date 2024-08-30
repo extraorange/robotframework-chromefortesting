@@ -21,7 +21,7 @@ Safeguarded for automatical update and repair.
 pip install robotframework-chromefortesting
 ```
 
-It is _highly recommended_ to use a virtual environment (.venv) for achieving best reliability.
+It is _highly recommended_ to use a virtual environment.
 
 ## :hammer: Usage
 
