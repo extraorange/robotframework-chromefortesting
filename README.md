@@ -2,7 +2,7 @@
 
 ![Version](https://img.shields.io/badge/version-0.9.3-%2392C444)
 
-The only liibrary for seamless setup of Chrome for Testing (CfT) in and within Robot Framework.
+The only library for seamless setup of Chrome for Testing (CfT) in and within Robot Framework.
 
 For detailed information on CfT, refer to the official CfT documentation:
 
