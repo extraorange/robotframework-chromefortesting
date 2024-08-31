@@ -74,7 +74,7 @@ def extract_assets(version: str, config, *_bytes: Response) -> Tuple[str, str]:
     chromedriver_path = os.path.join(config.channel_path, f"chromedriver-{config.platform}")
     return chrome_path, chromedriver_path
 
-def download_assets(config) -> ChromeAssets:
+def download_assets(config) -> Optional[ChromeAssets]:
     response = request_chromelabs()
     if response:
         version = get_current_version(config.channel)
@@ -93,7 +93,7 @@ def download_assets(config) -> ChromeAssets:
                     config.headless
                     )
 
-def update_assets(config) -> ChromeAssets:
+def update_assets(config) -> Optional[ChromeAssets]:
     response = request_chromelabs()
     if response:
         version = get_current_version(config.channel)
