@@ -5,7 +5,7 @@ from typing import Optional, Tuple
 import requests
 from requests.models import Response
 
-from .toolkit import ExtendedZipFile, get_hash, get_timestap, set_permissions
+from .toolkit import ExtendedZipFile, get_hash, get_timestamp, set_permissions
 
 class ChromeAssets():
     def __init__(self, chrome_path: str, chromedriver: str, version: Optional[str] = None, timestamp: Optional[str] = None, md5: Optional[str] = None, headless: bool = False):
@@ -74,7 +74,7 @@ def extract_assets(version: str, config, *_bytes: Response) -> Tuple[str, str]:
     chromedriver_path = os.path.join(config.channel_path, f"chromedriver-{config.platform}")
     return chrome_path, chromedriver_path
 
-def download_assets(config) -> ChromeAssets:
+def download_assets(config) -> Optional[ChromeAssets]:
     response = request_chromelabs()
     if response:
         version = get_current_version(config.channel)
@@ -88,12 +88,12 @@ def download_assets(config) -> ChromeAssets:
                     chrome_path, 
                     chromedriver_path, 
                     version, 
-                    get_timestap(), 
+                    get_timestamp(), 
                     get_hash(config.channel_path), 
                     config.headless
                     )
 
-def update_assets(config) -> ChromeAssets:
+def update_assets(config) -> Optional[ChromeAssets]:
     response = request_chromelabs()
     if response:
         version = get_current_version(config.channel)
@@ -108,7 +108,7 @@ def update_assets(config) -> ChromeAssets:
                     chrome_path, 
                     chromedriver_path, 
                     get_current_version(config.channel), 
-                    get_timestap(), 
+                    get_timestamp(), 
                     get_hash(config.channel_path), 
                     config.headless
                     )
