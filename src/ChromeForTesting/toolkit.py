@@ -35,9 +35,9 @@ def get_timestamp() -> str:
 # Permission setting
 def set_permissions(platform, chrome_path, chromedriver_path, headless) -> None:
     if "win" in platform:
-        if headless: subprocess.run(['icacls', os.path.join(chrome_path, "chrome-headless-shell.exe"), '/grant', '*S-1-1-0:(RX)', '/q'])
-        else: subprocess.run(['icacls', os.path.join(chrome_path, "chrome.exe"), '/grant', '*S-1-1-0:(RX)', '/q'])
-        subprocess.run(['icacls', os.path.join(chromedriver_path, "chromedriver.exe"), '/grant', '*S-1-1-0:(RX)', '/q'])
+        if headless: subprocess.run(['icacls', os.path.join(chrome_path, "chrome-headless-shell.exe"), '/grant', '*S-1-1-0:(RX)'], stdout=subprocess.DEVNULL)
+        else: subprocess.run(['icacls', os.path.join(chrome_path, "chrome.exe"), '/grant', '*S-1-1-0:(RX)'], stdout=subprocess.DEVNULL)
+        subprocess.run(['icacls', os.path.join(chromedriver_path, "chromedriver.exe"), '/grant', '*S-1-1-0:(RX)'], stdout=subprocess.DEVNULL)
     elif "mac" in platform:
         if headless: os.chmod(os.path.join(chrome_path, "chrome-headless-shell"), 0o755)
         else: os.chmod(os.path.join(chrome_path, "Google Chrome for Testing.app"), 0o755)
