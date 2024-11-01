@@ -5,7 +5,7 @@ with open("README.md", 'r') as f:
 
 setup(
     name='robotframework-chromefortesting',
-    version='0.9.3',
+    version='0.9.5',
     packages=find_packages(where='src'),
     package_dir={'': 'src'},
     install_requires=[

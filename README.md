@@ -1,6 +1,6 @@
 # robotframework-chromefortesting :ukraine:
 
-![Version](https://img.shields.io/badge/version-0.9.3-%2392C444)
+![Version](https://img.shields.io/badge/version-0.9.5-%2392C444)
 
 The only library for seamless setup of Chrome for Testing (CfT) in and within Robot Framework.
 
